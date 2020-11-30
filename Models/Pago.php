@@ -9,14 +9,16 @@
         private $monto;
         private $medioDePago;
         private $listaVentas;   //Array de Ventas
+        private $nroRecibo;
 
-        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaVentas = null){
+        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaVentas = null, $nroRecibo = null){
             
             $this->id = $id;
             $this->fecha = $fecha;
             $this->monto = $monto;
             $this->medioDePago = $medioDePago;
             $this->listaVentas = $listaVentas;
+            $this->nroRecibo = $nroRecibo;
         }
 
         public function setId($id){
@@ -39,6 +41,10 @@
             $this->listaVentas = $listaVentas;
         }
 
+        public function setNroRecibo($nroRecibo){
+            $this->nroRecibo = $nroRecibo;
+        }
+
         public function getId(){
             return $this->id;
         }
@@ -57,6 +63,10 @@
 
         public function getListaVentas(){
             return $this->listaVentas;
+        }
+
+        public function getNroRecibo(){
+            return $this->nroRecibo;
         }
 
     }

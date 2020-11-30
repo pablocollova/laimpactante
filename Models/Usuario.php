@@ -13,14 +13,16 @@
         private $telefono;
         private $calle;
         private $altura;
+        private $piso;
+        private $dpto;
         private $razonSocial;
         private $esAdmin;
         private $ctaCorriente;
         private $listaPedidos;      //Array de pedidos
 
         public function __construct($id = null, $nombre = null, $apellido = null, $email = null, $password = null,
-        $dni = null, $telefono = null, $calle = null, $altura = null, $razonSocial = null, $esAdmin = null,
-        CuentaCorriente $ctaCorriente = null, $listaPedidos = null){
+        $dni = null, $telefono = null, $calle = null, $altura = null, $piso = null, $dpto = null, $razonSocial = null,
+        $esAdmin = null, CuentaCorriente $ctaCorriente = null, $listaPedidos = null){
 
             $this->id = $id;
             $this->nombre = $nombre;
@@ -31,6 +33,8 @@
             $this->telefono = $telefono;
             $this->calle = $calle;
             $this->altura = $altura;
+            $this->piso = $piso;
+            $this->dpto = $dpto;
             $this->razonSocial = $razonSocial;
             $this->esAdmin = $esAdmin;
             $this->ctaCorriente = $ctaCorriente;
@@ -71,6 +75,14 @@
 
         public function setAltura($altura){
             $this->altura = $altura;
+        }
+
+        public function setPiso($piso){
+            $this->piso = $piso;
+        }
+        
+        public function setDpto($dpto){
+            $this->dpto = $dpto;
         }
 
         public function setRazonSocial($razonSocial){
@@ -123,6 +135,14 @@
 
         public function getAltura(){
             return $this->altura;
+        }
+
+        public function getPiso(){
+            return $this->piso;
+        }
+
+        public function getDpto(){
+            return $this->dpto;
         }
 
         public function getRazonSocial(){

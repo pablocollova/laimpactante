@@ -4,6 +4,7 @@
 
     class DetallePedido{
 
+        private $id;
         private $producto;
         private $cantidad;
         private $descuento;
@@ -15,6 +16,10 @@
             $this->cantidad = $cantidad;
             $this->descuento = $descuento;
             $this->importe = $importe;
+        }
+
+        public function setId($id){
+            $this->id = $id;
         }
 
         public function setProducto(Producto $producto){
@@ -31,6 +36,10 @@
 
         public function setImporte($importe){
             $this->importe = $importe;
+        }
+
+        public function getId(){
+            return $this->id;
         }
 
         public function getProducto(){

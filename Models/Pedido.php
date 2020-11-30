@@ -10,8 +10,9 @@
         private $estado;            //Aceptado, En espera, Rechazado
         private $importe;
         private $descuento;
+        private $nroRemito;
 
-        public function __construct($id = null, $fecha = null, $listaProductos = null, $estado = null, $importe = null, $descuento = null){
+        public function __construct($id = null, $fecha = null, $listaProductos = null, $estado = null, $importe = null, $descuento = null, $nroRemito = null){
 
             $this->id = $id;
             $this->fecha = $fecha;
@@ -19,6 +20,7 @@
             $this->estado =$estado;
             $this->importe = $importe;
             $this->descuento = $descuento;
+            $this->nroRemito = $nroRemito;
         }
 
         public function setId($id){
@@ -45,6 +47,10 @@
             $this->descuento = $descuento;
         }
 
+        public function setNroRemito($nroRemito){
+            $this->nroRemito = $nroRemito;
+        }
+
         public function getId(){
             return $this->id;
         }
@@ -67,6 +73,10 @@
 
         public function getDescuento(){
             return $this->descuento;
+        }
+
+        public function getNroRemito(){
+            return $this->nroRemito;
         }
     }
 
