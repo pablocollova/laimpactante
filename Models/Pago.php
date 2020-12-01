@@ -8,7 +8,7 @@
         private $fecha;
         private $monto;
         private $medioDePago;
-        private $listaVentas;   //Array de Ventas
+        private $listaDetalles;   //Array de DetallePago
         private $nroRecibo;
 
         public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaVentas = null, $nroRecibo = null){
@@ -37,8 +37,8 @@
             $this->medioDePago = $medioDePago;
         }
 
-        public function setListaVentas($listaVentas){
-            $this->listaVentas = $listaVentas;
+        public function setListaDetalles($listaDetalles){
+            $this->listaDetalles = $listaDetalles;
         }
 
         public function setNroRecibo($nroRecibo){
@@ -61,8 +61,8 @@
             return $this->medioDePago;
         }
 
-        public function getListaVentas(){
-            return $this->listaVentas;
+        public function getListaDetalles(){
+            return $this->listaDetalles;
         }
 
         public function getNroRecibo(){

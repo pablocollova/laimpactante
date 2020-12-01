@@ -11,19 +11,26 @@
         private $connection;
         private $tableName = "ventas";
 
-        public function Add(Pedido $pedido){
+        public function Add(Pedido $pedido, $idUser){
 
+            $detallePedidoDAO = new DetallePedidoDAO();
             try{
-                $query = "INSERT INTO ".$this->tableName." (fecha_pedido, estado_pedido, total, descuento_venta) VALUES (:fecha, :estado, :importe, :descuento);";
+                $query = "INSERT INTO ".$this->tableName." (fecha_pedido, estado_pedido, total, descuento_venta, id_cliente) VALUES (:fecha, :estado, :importe, :descuento, :idCliente);";
                 
                 $parameters["fecha"] = $pedido->getFecha();
                 $parameters["estado"] = $pedido->getEstado();
                 $parameters["importe"] = $pedido->getImporte();
                 $parameters["descuento"] = $pedido->getDescuento();
+                $parameters["idCliente"] = $idUser;
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
-            
+                
+                $id = $this->lastId();
+                foreach($pedido->getListaDetalles() as $detalle){
+                    $detallePedidoDAO->Add($detalle, $id);
+                }
+
             }catch(Exception $ex){
                 throw $ex;
             }
@@ -34,7 +41,7 @@
             
             try{
                 $productoList = array();
-                $detallePedidoDAO = new DetallePedido();
+                $detallePedidoDAO = new DetallePedidoDAO();
                 
                 $query = "SELECT * FROM ".$this->tableName;
                 
@@ -117,6 +124,20 @@
             } catch (Exception $ex){ 
                 throw $ex;
             }
+        }
+
+        public function lastId(){
+
+            try{
+                $query = "SELECT MAX(id) AS id FROM " . $this->tableName;
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+            
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+           return $resultSet[0]['id'];
         }
     
         protected function mapear($value){
