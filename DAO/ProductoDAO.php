@@ -66,7 +66,10 @@
             }
         }
 
-
+        public function getProductosPorCategoria($idCategoria)
+        {
+            
+        }
         public function GetOne($id){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_producto = :id";

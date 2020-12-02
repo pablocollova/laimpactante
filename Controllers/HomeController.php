@@ -8,7 +8,7 @@
             $_SESSION['log'] = false;
             $_SESSION['esAdmin'] = false;
 
-            $comercio = new ComercioController();
+            $catalogo = new ProductoController();
 
             //require_once(VIEWS_PATH."index.php");
         }
