@@ -106,7 +106,10 @@
                 throw $ex;
             }
         }
-
+        public function getProductosDestacados()
+        {
+            echo "productos destacados";
+        }
         public function Edit(Producto $productoActualizado){
             
             $categoriaDAO = new CategoriaDAO();
@@ -130,6 +133,8 @@
                 throw $ex;
             }
         }
+
+
     
         protected function mapear($value){
 
