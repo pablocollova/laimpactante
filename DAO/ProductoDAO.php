@@ -5,6 +5,7 @@
     use \Exception as Exception;
     use DAO\Connection as Connection;
     use Models\Producto as Producto;
+    use DAO\CategoriaDAO as CategoriaDAO;
 
     class ProductoDAO{
 
@@ -15,13 +16,14 @@
 
             try{
                 $query = "INSERT INTO ".$this->tableName." (codigo_producto, nombre_producto, descripcion_producto, cantidad_producto, precio_producto, categoria_producto, para_venta, minimo_unidades) VALUES (:codigo, :nombre, :descripcion, :cantidad, :precio, :categoria, :para_venta, :minimo_unidades);";
-                
+                $categoriaDAO = new CategoriaDAO();
+
                 $parameters["codigo"] = $producto->getCodigo();
                 $parameters["nombre"] = $producto->getNombre();
                 $parameters["descripcion"] = $producto->getDescripcion();
                 $parameters["cantidad"] = $producto->getStock();
                 $parameters["precio"] = $producto->getPrecioUnitario();
-                $parameters["categoria"] = $producto->getCategoria();
+                $parameters["categoria"] = $categoriaDAO->GetPorNombre($producto->getCategoria())->getId();
                 $parameters["para_venta"] = $producto->getParaVenta();
                 $parameters["minimo_unidades"] = $producto->getMinUnidades();
 
@@ -107,16 +109,18 @@
 
         public function Edit(Producto $productoActualizado){
             
+            $categoriaDAO = new CategoriaDAO();
             $query = "UPDATE " . $this->tableName . " SET codigo_producto = :codigo, nombre_producto = :nombre, descripcion_producto = :descripcion, cantidad_producto = :cantidad, precio_producto = :precio, categoria_producto = :categoria, para_venta = :para_venta, minimo_unidades = :minimo_unidades WHERE id_producto = :id";
+            
             $parameters["codigo"] = $productoActualizado->getCodigo();
             $parameters["nombre"] = $productoActualizado->getNombre();
             $parameters["descripcion"] = $productoActualizado->getDescripcion();
             $parameters["cantidad"] = $productoActualizado->getStock();
             $parameters["precio"] = $productoActualizado->getPrecioUnitario();
-            $parameters["categoria"] = $productoActualizado->getMinUnidades();
+            $parameters["categoria"] = $categoriaDAO->GetPorNombre($productoActualizado->getCategoria())->getId();
             $parameters["para_venta"] = $productoActualizado->getCategoria();
-            $parameters["minimo_unidades"] = $productoActualizado->getParaVenta();
-            $parameters["id_producto"] = $productoActualizado->getId();
+            $parameters["minimo_unidades"] = $productoActualizado->getMinUnidades();
+            $parameters["id"] = $productoActualizado->getId();
 
             try{
                 $this->connection = Connection::GetInstance();
@@ -129,11 +133,16 @@
     
         protected function mapear($value){
 
+            $categoriaDAO = new CategoriaDAO();
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["categoria_producto"], $p["para_venta"], $p["minimo_unidades"]);
+
+                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], $p["categoria_producto"], $p["para_venta"]);
             }, $value);
 
+            foreach($resp as $producto){
+                $producto->setCategoria($categoriaDAO->GetOne($producto->getCategoria())->getNombre());
+            }
             return count($resp) > 1 ? $resp : $resp["0"];
         }
         

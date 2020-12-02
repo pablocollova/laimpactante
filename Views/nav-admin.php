@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <article>
 <div id="navUsuario" class="container-fluid col-12"> 
 <ul class="nav nav-pills">
@@ -60,3 +61,24 @@
 </article>
 <article>
 <div class="container-fluid card col-12">
+=======
+<div> 
+<ul>
+
+  <li>
+    <a href="#">Productos</a>
+    <div>
+    <a href="<?php echo FRONT_ROOT ?>Producto/ShowAddView">Agregar</a>
+    <a href="<?php echo FRONT_ROOT ?>Producto/ShowListView">Listar</a>
+    
+  </li>
+
+  <li>
+    <a href="#">Categorías</a>
+    <div>
+    <a href="<?php echo FRONT_ROOT ?>Categoria/ShowAddView">Agregar</a>
+    <a href="<?php echo FRONT_ROOT ?>Categoria/ShowListView">Listar</a>
+  </li>
+</ul>
+</div>
+>>>>>>> Noelia

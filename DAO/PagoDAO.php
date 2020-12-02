@@ -107,11 +107,15 @@
     
         protected function mapear($value){
 
-            $detallePagoDAO = new DetallePagoDAO();
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Pago($p["id_pago"], $p["fecha"], $p["monto"], $p["mediodepago"], $detallePagoDAO->GetDetallesDePago($p["id_pago"]), $p["nro_recibo"]);
+                return new Pago($p["id_pago"], $p["fecha"], $p["monto"], $p["mediodepago"], '', $p["nro_recibo"]);
             }, $value);
+            
+            $detallePagoDAO = new DetallePagoDAO();
+            foreach($resp as $pago){
+                $pago->setListaDetalles($detallePagoDAO->GetDetallesDePago($pago->getId()));
+            }
 
             return count($resp) > 1 ? $resp : $resp["0"];
         }

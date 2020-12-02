@@ -142,11 +142,15 @@
     
         protected function mapear($value){
 
-            $detallePedidoDAO = new DetallePedido();
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Pedido($p["id_venta"], $detallePedidoDAO->GetDetallesPorPedido($p["id_venta"]), $p["estado_pedido"], $p["total"], $p["descuento_venta"], $p["nro_remito"]);
+                return new Pedido($p["id_venta"], $p["fecha"], '', $p["estado_pedido"], $p["total"], $p["descuento_venta"], $p["nro_remito"]);
             }, $value);
+            
+            $detallePedidoDAO = new DetallePedido();
+            foreach($resp as $pedido){
+                $pedido->setListaDetalles($detallePedidoDAO->GetDetallesPorPedido($pedido->getId()));
+            }
 
             return count($resp) > 1 ? $resp : $resp["0"];
         }

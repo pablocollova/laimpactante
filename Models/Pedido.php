@@ -12,7 +12,7 @@
         private $descuento;
         private $nroRemito;
 
-        public function __construct($id = null, $fecha = null, $listaProductos = null, $estado = null, $importe = null, $descuento = null, $nroRemito = null){
+        public function __construct($id = null, $fecha = null, $listaDetalles = null, $estado = null, $importe = null, $descuento = null, $nroRemito = null){
 
             $this->id = $id;
             $this->fecha = $fecha;
@@ -31,8 +31,8 @@
             $this->fecha = $fecha;
         }
 
-        public function setListaProductos($listaPoductos){
-            $this->listaProductos = $listaPoductos;
+        public function setListaDetalles($listaDetalles){
+            $this->listaDetalles = $listaDetalles;
         }
 
         public function setEstado($estado){
@@ -59,8 +59,8 @@
             return $this->fecha;
         }
 
-        public function getListaProductos(){
-            return $this->listaProductos;
+        public function getListaDetalles(){
+            return $this->listaDetalles;
         }
 
         public function getEstado(){

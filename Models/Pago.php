@@ -11,13 +11,13 @@
         private $listaDetalles;   //Array de DetallePago
         private $nroRecibo;
 
-        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaVentas = null, $nroRecibo = null){
+        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null){
             
             $this->id = $id;
             $this->fecha = $fecha;
             $this->monto = $monto;
             $this->medioDePago = $medioDePago;
-            $this->listaVentas = $listaVentas;
+            $this->listaDetalles = $listaDetalles;
             $this->nroRecibo = $nroRecibo;
         }
 
