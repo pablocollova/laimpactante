@@ -81,12 +81,15 @@
 
         protected function mapear($value){
 
-            $pedidoDAO = new PedidoDAO();
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Producto($p["id_venta"], $pedidoDAO->GetOne($p[id_venta]), $p["fecha"], $p["nro_factura_venta"]);
+                return new Venta($p["id_venta"], '', $p["fecha"], $p["nro_factura_venta"]);
             }, $value);
-
+            
+            $pedidoDAO = new PedidoDAO();
+            foreach($resp as $venta){
+                $venta->setPedido($pedidoDAO->getOne($venta->getId()));
+            }
             return count($resp) > 1 ? $resp : $resp["0"];
         }
         

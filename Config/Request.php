@@ -16,12 +16,12 @@
             $urlArray = array_filter($urlArray);
 
             if(empty($urlArray))
-                $this->controller = "Home";            
+                $this->controller = "Producto";            
             else
                 $this->controller = ucwords(array_shift($urlArray));
 
             if(empty($urlArray))
-                $this->method = "Index";
+                $this->method = "ShowAddView";
             else
                 $this->method = array_shift($urlArray);
 

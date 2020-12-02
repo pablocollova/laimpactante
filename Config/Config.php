@@ -6,4 +6,10 @@
     define("FRONT_ROOT", "/laimpactante/");
     define("VIEWS_PATH", "Views/");
 
+    define("DB_HOST", "localhost");
+    define("DB_NAME", "laimpactantebd");
+    define("DB_USER", "root");
+    define("DB_PASS", "");
+
+
 ?>

@@ -96,14 +96,17 @@
     
         protected function mapear($value){
             
-            $productoDAO = new ProductoDAO();
             $value = is_array($value) ? $value : [];
-
             $resp = array_map(function($p){
                 $producto = $productoDAO->GetOne($p["id_producto"]);
-                return new DetalleProducto($producto, $p["cantidad_producto"], $p["descuento_producto"], $producto->getPrecioUnitario() * $p["cantidad_producto"] - $p["descuento_producto"]);
+                return new DetallePedido($p["id_producto"], $p["cantidad_producto"], $p["descuento_producto"], '');
             }, $value);
-
+            
+            $productoDAO = new ProductoDAO();
+            foreach($resp as $detalle){
+                $detalle->setProducto($productoDAO->GetOne($detalle->getProducto()));
+                $detalle->setImporte($detalle->getProducto()->getPrecioUnitario() * $detalle->getCantidad() - $detalle->getDescuento());
+            }
             return count($resp) > 1 ? $resp : $resp["0"];
         }
         
