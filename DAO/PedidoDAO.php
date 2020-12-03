@@ -71,6 +71,26 @@
         }
 
 
+        public function GetPedidosPorEstado($estado){
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE estado_pedido = :estado";
+            $parameters["estado"] = $estado;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+            }catch (Exception $ex){ 
+                throw $ex;
+            }
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }            
+        }
+
         public function GetOne($id){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_venta = :id";
@@ -106,7 +126,7 @@
             }
         }
 
-        public function Edit(Producto $productoActualizado){
+        public function Edit(Pedido $pedido){
             
             $query = "UPDATE " . $this->tableName . " SET fecha_pedido = :fecha, estado_pedido = :fecha, total = :total, descuento_venta = :descuento, nro_remito = :nroRemito WHERE id_venta = :id";
             
@@ -129,7 +149,7 @@
         public function lastId(){
 
             try{
-                $query = "SELECT MAX(id) AS id FROM " . $this->tableName;
+                $query = "SELECT MAX(id_venta) AS id FROM " . $this->tableName;
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
             
@@ -147,7 +167,7 @@
                 return new Pedido($p["id_venta"], $p["fecha"], '', $p["estado_pedido"], $p["total"], $p["descuento_venta"], $p["nro_remito"]);
             }, $value);
             
-            $detallePedidoDAO = new DetallePedido();
+            $detallePedidoDAO = new DetallePedidoDAO();
             foreach($resp as $pedido){
                 $pedido->setListaDetalles($detallePedidoDAO->GetDetallesPorPedido($pedido->getId()));
             }

@@ -7,7 +7,7 @@
         private $id;
         private $fecha;
         private $listaDetalles;     //Array de DetallePedido 
-        private $estado;            //Aceptado, En espera, Rechazado
+        private $estado;            //1.Actual (Pedido que el cliente no envío todavía), 2.En espera, 3.Aceptado, 4.Rechazado
         private $importe;
         private $descuento;
         private $nroRemito;
@@ -16,7 +16,7 @@
 
             $this->id = $id;
             $this->fecha = $fecha;
-            $this->listaPoductos = $listaPoductos;
+            $this->listaDetalles = $listaDetalles;
             $this->estado =$estado;
             $this->importe = $importe;
             $this->descuento = $descuento;

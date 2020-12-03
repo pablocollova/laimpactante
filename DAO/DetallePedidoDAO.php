@@ -16,10 +16,10 @@
             try{
                 $query = "INSERT INTO ".$this->tableName." (id_producto, cantidad_producto, descuento_producto, id_venta) VALUES (:idProducto, :cantidad, :descuento, :idVenta); ";
                 
-                $parameters["idProducto"] = $detalleProducto->getProducto()->getId();
+                $parameters["idProducto"] = $detallePedido->getProducto()->getId();
                 $parameters["idVenta"] = $idVenta;
-                $parameters["cantidad"] = $detalleProducto->getCantidad();
-                $parameters["descuento"] = $detalleProducto->getDescuento();
+                $parameters["cantidad"] = $detallePedido->getCantidad();
+                $parameters["descuento"] = $detallePedido->getDescuento();
                 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);

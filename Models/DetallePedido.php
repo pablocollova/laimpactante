@@ -10,8 +10,9 @@
         private $descuento;
         private $importe;
         
-        public function __construct($producto = null, $cantidad = null, $descuento = null, $importe = null){
+        public function __construct($id = null, $producto = null, $cantidad = null, $descuento = null, $importe = null){
 
+            $this->id = $id;
             $this->producto = $producto;
             $this->cantidad = $cantidad;
             $this->descuento = $descuento;
