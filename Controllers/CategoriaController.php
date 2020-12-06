@@ -62,8 +62,7 @@
 
             $this->categoriaDAO->Remove($id);
             $this->ShowListView();
-        }
-        
+        }     
     }
 
 ?>

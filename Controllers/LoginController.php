@@ -3,24 +3,24 @@
 namespace Controllers;
 
 use \Exception as Exception;
-use DAO\UsersDAO as UsersDAO;
-use Models\User as User;
+use DAO\UsuarioDAO as UsuarioDAO;
+use Models\Usuario as Usuario;
 
 class LoginController {
 
-    private $usersDAO;
+    private $usuarioDAO;
 
     public function __construct(){
 
-        $this->usersDAO = new UsersDAO();
+        $this->usuarioDAO = new UsuarioDAO();
     }
 
     public function init($email, $pass) {
 
         try{
-            $user = $this->usersDAO->read($email, $pass);
+            $usuario = $this->usuarioDAO->read($email, $pass);
 
-            if ($user){
+            if ($usuario){
                 
                 $_SESSION['log'] = true;
                 $_SESSION['id'] = $user->getId();
@@ -41,7 +41,7 @@ class LoginController {
             
         }catch (Exception $ex){
 
-            HomeController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Home/Index/");
+            ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Tools/Index/");
         }
         
     }
@@ -55,8 +55,8 @@ class LoginController {
         $_SESSION['log'] = false;
         $_SESSION['esAdmin'] = false;
 
-        $home = new HomeController();
-        $home->Index();
+        $tools = new ToolsController();
+        $tools->Index();
 
     }
 
@@ -72,28 +72,51 @@ class LoginController {
     
     }
 
-    public function signin($nombre, $apellido, $dni, $email, $pass){
+    public function signin($nombre, $apellido, $dni, $email, $pass, $razonSocial,$telefono, $calle, $altura, $piso, $dpto){
 
         try{
-            $nombre = HomeController::validateString($nombre);
-            $apellido = HomeController::validateString($apellido);
+            $nombre = ToolsController::validateString($nombre);
+            $apellido = ToolsController::validateString($apellido);
 
             if (!($nombre && $apellido)){
                 
                 throw new Exception("El nombre o apellido está vacío.");
             }
             
-            $user = new User();
-            $user->setNombre($nombre);
-            $user->setApellido($apellido);
-            $user->setDni($dni);
-            $user->setEmail($email);
-            $user->setPassword($pass);
-            $user->setAdmin(false);
-            $user->setIdFB(0);
+            $usuario = new Usuario();
+            $usuario->setNombre($nombre);
+            $usuario->setApellido($apellido);
+            $usuario->setDni($dni);
+            $usuario->setEmail($email);
+            $usuario->setPassword($pass);
+            $usuario->setEsAdmin(false);
+            $usuario->setTelefono($telefono);
+            $usuario->setCalle($calle);
+            $usuario->setAltura($altura);
+            $usuario->setPiso($piso);
+            $usuario->setDpto($dpto);
+            $usuario->setRazonSocial($razonSocial);
+            $usuario->setEsAdmin($esAdmin);
+            $usuario->setCtaCorriente($ctaCorriente);
+            $usuario->setListaPedidos($listaPedidos);
+            /*
+            nombre_usuario
+            apellido_usuario
+            razonSocial_usuario
+            dni_usuario
+            isAdmin
+            email 
+            pass_usuario
+            telefono_usuario
+            domicilio_usuario
+            altura_usuario
+            piso_usuario 
+            dept_usuario 
+            */
 
-            $this->usersDAO->Add($user);
-            $user = $this->usersDAO->read($email, $pass);
+
+            $this->usuarioDAO->Add($usuario);
+            $usuario = $this->usuarioDAO->read($email, $pass);
     
             $_SESSION['log'] = true;
             $_SESSION['id'] = $idUser;
@@ -101,57 +124,14 @@ class LoginController {
             $_SESSION['email'] = $email;
             $_SESSION['esAdmin'] = false;
     
-            $cartelera = new FuncionController();
-            $cartelera->ShowCartelera();
+            $catalogo = new ProductoController();
+            $catalogo->ShowCatalogo();
 
         }catch(Exception $ex){
 
-            HomeController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Home/Index/");
+          //  ToolsController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Tools/Index/");
         }
     }
 
-    public function fbLogin($idFB, $nombre, $apellido, $email) {
-
-        try{
-            $userFB = $this->usersDAO->GetOneFB($idFB);
-            
-             if(!$userFB){
-
-                $user = new User();
-                $user->setNombre($nombre);
-                $user->setApellido($apellido);
-                $user->setDni(null);
-                $user->setEmail($email);
-                $user->setPassword(null);
-                $user->setAdmin(false);
-                $user->setIdFB($idFB);
-
-
-                $idUser = $this->usersDAO->AddFB($user);
-
-                $_SESSION['log'] = true;
-                $_SESSION['id'] = $idUser;
-                $_SESSION['name'] = $nombre;
-                $_SESSION['email'] = $email;
-                $_SESSION['esAdmin'] = false;
-                
-            }else{
-                
-                $_SESSION['log'] = true;
-                $_SESSION['id'] = $userFB->getId();
-                $_SESSION['name'] = $userFB->getNombre();
-                $_SESSION['email'] = $userFB->getEmail();
-                $_SESSION['esAdmin'] = false;
-            }
-            
-            $funciones = new FuncionController();
-            $funciones->ShowCartelera();
-
-        }catch(Exception $ex){
-
-            HomeController::ShowErrorView("Error al leer o agregar un usuario de Facebook.", $ex->getMessage(), "Home/Index");
-        }
-        
-    }
 
 }

@@ -22,10 +22,10 @@
    
 </div>
 <br>
-    <h5 id="hHeader" class="card-text">¡Adquiere entradas para ver tu pr&oacute;xima pel&iacute;cula favorita aqu&iacute;!</h5><br>
+    <h5 id="hHeader" class="card-text">Accede a ser un revendedor de La Impactante</h5><br>
    
 
-<a type="button" class="btn btn-danger col-5" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera#peliculas">
+<a type="button" class="btn btn-danger col-5" href="<?php echo FRONT_ROOT ?>Funcion/ShowCatalogo#productos">
  Comprar
 </a>
 
@@ -36,10 +36,7 @@
 <br>
 <br>
 </header>
-<div id="video">
-<video src="<?php echo VIDEOS.'inicio-2.mp4' ?>" width="100%" autoplay muted loop>
-</video>
-</div>
+
 
 
 

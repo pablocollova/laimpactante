@@ -7,7 +7,7 @@ include('header-login.php');
 
 include('nav-principal.php');
 
-include('cartelera.php');
+include('catalogo.php');
 
 include('footer.php');
 
