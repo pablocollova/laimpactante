@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use \Exception as Exception;
-use DAO\UsersDAODB as UsersDAO;
+use DAO\UsuarioDAO as UsersDAO;
 use Models\User as User;
 
 class UserController {
@@ -37,7 +37,7 @@ class UserController {
 
         }catch(Exception $ex){
 
-            HomeController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Home/Index/");
+            ToolsController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Tools/Index/");
         }
         
 
@@ -66,7 +66,7 @@ class UserController {
 
         }catch(Exception $ex){
 
-            HomeController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Home/Index/");
+            ToolsController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Tools/Index/");
         }
 
     }
@@ -74,8 +74,8 @@ class UserController {
     public function Edit($id, $nombre, $apellido, $dni, $email, $pass, $admin, $idFB){
 
         try{
-            $nombre = HomeController::validateString($nombre);
-            $apellido = HomeController::validateString($apellido);
+            $nombre = ToolsController::validateString($nombre);
+            $apellido = ToolsController::validateString($apellido);
 
             if(!($nombre && $apellido)){
 
@@ -104,7 +104,7 @@ class UserController {
 
         }catch(Exception $ex){
 
-            HomeController::ShowErrorView("La información del usuario no pudo ser actualizada.", $e->getMessage(), "Home/Index/");
+            ToolsController::ShowErrorView("La información del usuario no pudo ser actualizada.", $e->getMessage(), "Tools/Index/");
         }
 
     }

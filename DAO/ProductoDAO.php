@@ -106,6 +106,11 @@
                 throw $ex;
             }
         }
+        public function getProductos()
+        {
+            echo "todos los productos";
+        }
+
         public function getProductosDestacados()
         {
             echo "productos destacados";

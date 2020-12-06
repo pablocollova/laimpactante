@@ -27,13 +27,13 @@ $(function () {
 
         <div class="col-md-4">
             <div class="infoarea">
-                <p>Tecnicatura Universitaria en Programaci&oacute;n</p>
-		<p>Universidad Tecnol&oacute;gica Nacional FRMDP</p>
+                <p>desarrollo de software</p>
+		<p>BEYACO</p>
           </div>
         </div>
 
         <div id="logoS" class="d-flex justify-content-center col-md-5" style="margin-left: -50px;">
-	<img src="<?php echo IMAGES.'logo.png' ?>" alt="MoviePass" width="38%" height="60%">
+	<img src="<?php echo IMAGES.'logo.png' ?>" alt="La Impactante" width="38%" height="60%">
 </div>
 
         <div class="col-md-3">
@@ -42,7 +42,6 @@ $(function () {
              <ul id="integrantesFooter">
               <li>Benitez, Noelia.</li>
               <li>Collova, Pablo.</li>
-              <li>Martin, Tomas.</li>
               <li>Yarossi, Candela.</li>
             </ul>
           </div>

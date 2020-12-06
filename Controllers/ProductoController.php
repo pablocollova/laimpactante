@@ -91,7 +91,7 @@
     public function ShowCatalogo(){
 
         try{
-
+            //if(isset($_SESSION['log'])  if($_SESSION['esAdmin'] == true) 
             if($_SESSION['log'] == false){
                 require_once(ROOT . '/Views/header-login.php'); 
                 require_once(ROOT . '/Views/nav-principal.php');
@@ -112,7 +112,7 @@
 
         }catch(Exception $ex){
 
-            HomeController::ShowErrorView("Error al obtener las películas de la cartelera.", $ex->getMessage(), "Home/Index");
+            ToolsController::ShowErrorView("Error al obtener los productos del catalogo.", $ex->getMessage(), "/Index");
         }
 
     }     

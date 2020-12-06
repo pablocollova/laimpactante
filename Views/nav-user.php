@@ -12,9 +12,9 @@
 </div> 
   </li>
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pel&iacute;culas</a>
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productos</a>
     <div class="dropdown-menu">
-    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Funcion/ShowCartelera">Pel&iacute;culas en Cartelera</a>
+    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Producto/ShowCatalogo">prductos en catalogo</a>
       
 </div>
   </li>

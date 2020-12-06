@@ -26,16 +26,11 @@
             </div>
         </div>        
         <div class="form-group">
-            <button type="submit" class="btn btn-danger login-btn btn-block">Ingresar</button>
+            <button type="submit" class="btn btn-warning login-btn btn-block">Ingresar</button>
         </div>
         
 	<hr>	
-        <p class="text-center">Inicia sesi&oacute;n con tus redes sociales</p>
-        <div class="text-center social-btn">
-
-        <div class="fb-login-button" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false" data-width="" scope="public_profile,email" onlogin="checkLoginState();"></div>
-
-        </div>
+       
         <br>
         <p class="text-center text-muted small">¿No tienes una cuenta? <a href="<?php echo FRONT_ROOT ?>Login/signinView">Reg&iacute;strate!</a></p>
     </form>
