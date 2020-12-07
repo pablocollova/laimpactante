@@ -36,7 +36,7 @@
                 $detallePedidoList = array();
                 $productoDAO = new ProductoDAO();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "SELECT * FROM ".$this->tableName. " WHERE id_venta = ". $idPedido;
 
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
@@ -75,24 +75,6 @@
             }
         }
 
-        public function Edit(DetallePedido $detallePedido){
-            
-            $query = "UPDATE " . $this->tableName . " SET id_producto = :idProducto, id_venta = :idVenta, cantidad_producto = :cantidad, descuento_producto = :descuento WHERE id_pedido = :id";
-            
-            $parameters["idProducto"] = $detalleProducto->getProducto()->getId();
-            $parameters["idVenta"] = $idVenta;
-            $parameters["cantidad"] = $detalleProducto->getCantidad();
-            $parameters["descuento"] = $detalleProducto->getDescuento();
-            $parameters["id"] = $detalleProducto->getId();
-
-            try{
-                $this->connection = Connection::GetInstance();
-                $this->connection->ExecuteNonQuery($query, $parameters);
-
-            } catch (Exception $ex){ 
-                throw $ex;
-            }
-        }
     
         protected function mapear($value){
             

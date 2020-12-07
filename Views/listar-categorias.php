@@ -20,8 +20,10 @@
                   <td> <?= $categoria->getNombre(); ?> </td>
                   <td> <?= $categoria->getDescuento(); ?> </td>
                   <td>
-                    <button type="submit" name='edit' class="btn btn-danger" value="<?= $categoria->getId()?>" formaction="<?= FRONT_ROOT ?> Categoria/ShowEditView"> Editar </button>
-                    <button type="submit" name='remove' class="btn btn-secondary" value="<?= $categoria->getId()?>" formaction="<?=FRONT_ROOT ?> Categoria/ShowRemoveView"> Eliminar </button> 
+
+                    <a href="<?= FRONT_ROOT ?>Categoria/ShowEditView/ <?= $categoria->getId() ?>">Editar</a>
+                    <a href="<?= FRONT_ROOT ?>Categoria/ShowRemoveView/ <?= $categoria->getId() ?>">Eliminar</a>
+
                   </td>
                 </tr>
               

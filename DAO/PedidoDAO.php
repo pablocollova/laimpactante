@@ -75,6 +75,40 @@
         }
 
 
+        public function GetPedidosPorUsuario($idUsuario){
+            
+            try{
+                $productoList = array();
+                $detallePedidoDAO = new DetallePedidoDAO();
+                
+                $query = "SELECT * FROM ".$this->tableName . " WHERE id_cliente = ". $idUsuario;
+                
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){        
+                    
+                    $listaDetalle = $detallePedidoDAO->GetDetallesPorPedido($row["id_venta"]);
+                    $pedido = new Pedido();
+                    $pedido->setId($row["id_venta"]);
+                    $pedido->setFecha($row["fecha_pedido"]);
+                    $pedido->setListaDetalles($listaDetalle);
+                    $pedido->setEstado($row["estado_pedido"]);
+                    $pedido->setImporte($row["total"]);
+                    $pedido->setDescuento($row["descuento_venta"]);
+                    $pedido->setNroRemito($row["nro_remito"]);
+
+
+                    array_push($productoList, $pedido);
+                }
+                return $productoList;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+
         public function GetPedidosUsuarioPorEstado($estado, $idUser){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE estado_pedido = :estado AND id_cliente = :id";
@@ -137,7 +171,7 @@
             
             $parameters["fecha"] = $pedido->getFecha();
             $parameters["estado"] = $pedido->getEstado();
-            $parameters["importe"] = $pedido->getImporte();
+            $parameters["total"] = $pedido->getImporte();
             $parameters["descuento"] = $pedido->getDescuento();
             $parameters["nroRemito"] = $pedido->getNroRemito();
             $parameters["id"] = $pedido->getId();

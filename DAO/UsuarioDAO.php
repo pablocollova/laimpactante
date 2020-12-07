@@ -147,12 +147,17 @@
             }
         }
     
-        protected function mapear($value){          //Hay que agregar la cuenta corriente y la lista de pedidos
+        protected function mapear($value){          //Hay que agregar la cuenta corriente
  
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
                 return new Usuario($p["id_usuario"], $p["nombre_usuario"], $p["apellido_usuario"], $p["email"], $p["pass_usuario"], $p["dni_usuario"],  $p["telefono_usuario"], $p["domicilio_usuario"], $p["altura_usuario"], $p["piso_usuario"], $p["dept_usuario"], $p["razonSocial_usuario"], $p["isAdmin"]);
             }, $value);
+
+            $pedidoDAO = new PedidoDAO();
+            foreach($resp as $usuario){
+                $usuario->setListaPedidos($pedidoDAO->GetPedidosPorUsuario($usuario->getId()));
+            }
  
             return count($resp) > 1 ? $resp : $resp["0"];
         }

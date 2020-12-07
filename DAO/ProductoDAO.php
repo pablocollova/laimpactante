@@ -211,13 +211,13 @@
     
         protected function mapear($value){
 
-            $categoriaDAO = new CategoriaDAO();
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-
+                
                 return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], $p["categoria_producto"], $p["para_venta"]);
             }, $value);
-
+            
+            $categoriaDAO = new CategoriaDAO();
             foreach($resp as $producto){
                 $producto->setCategoria($categoriaDAO->GetOne($producto->getCategoria())->getNombre());
             }

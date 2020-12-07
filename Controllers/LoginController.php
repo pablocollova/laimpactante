@@ -38,8 +38,8 @@ class LoginController {
             }
             
         }catch (Exception $ex){
-
-            ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Producto/ShowCatalogo/");
+            throw $ex;
+            /* ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Producto/ShowCatalogo/"); */
         }
     }
 
