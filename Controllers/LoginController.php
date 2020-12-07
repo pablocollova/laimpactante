@@ -23,16 +23,14 @@ class LoginController {
             if ($usuario){
                 
                 $_SESSION['log'] = true;
-                $_SESSION['id'] = $user->getId();
-                $_SESSION['name'] = $user->getNombre();
-                $_SESSION['email'] = $user->getEmail();
-                $_SESSION['esAdmin'] = $user->getAdmin();
+                $_SESSION['id'] = $usuario->getId();
+                $_SESSION['name'] = $usuario->getNombre();
+                $_SESSION['email'] = $usuario->getEmail();
+                $_SESSION['esAdmin'] = $usuario->getEsAdmin();
         
-                if( $_SESSION['esAdmin'] == true){
-                   //plataforma admin
-                }else{
-                   //plataforma cliente
-                }
+                $catalogo = new ProductoController();
+                $catalogo->ShowCatalogo();
+                
             }else{
     
                 throw new Exception("El usuario y la contraseña no coinciden.");
@@ -41,10 +39,10 @@ class LoginController {
             
         }catch (Exception $ex){
 
-            ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Tools/Index/");
+            ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Producto/ShowCatalogo/");
         }
-        
     }
+
 
     public function logout() {
 
@@ -55,10 +53,10 @@ class LoginController {
         $_SESSION['log'] = false;
         $_SESSION['esAdmin'] = false;
 
-        $tools = new ToolsController();
-        $tools->Index();
-
+        $catalogo = new ProductoController();
+        $catalogo->ShowCatalogo();
     }
+
 
     public function signinView() {
 
@@ -72,7 +70,8 @@ class LoginController {
     
     }
 
-    public function signin($nombre, $apellido, $dni, $email, $pass, $razonSocial,$telefono, $calle, $altura, $piso, $dpto){
+
+    public function signin($nombre, $apellido, $dni, $calle, $altura, $piso, $dpto, $telefono, $razonSocial, $email, $pass){
 
         try{
             $nombre = ToolsController::validateString($nombre);
@@ -96,30 +95,15 @@ class LoginController {
             $usuario->setPiso($piso);
             $usuario->setDpto($dpto);
             $usuario->setRazonSocial($razonSocial);
-            $usuario->setEsAdmin($esAdmin);
-            $usuario->setCtaCorriente($ctaCorriente);
-            $usuario->setListaPedidos($listaPedidos);
-            /*
-            nombre_usuario
-            apellido_usuario
-            razonSocial_usuario
-            dni_usuario
-            isAdmin
-            email 
-            pass_usuario
-            telefono_usuario
-            domicilio_usuario
-            altura_usuario
-            piso_usuario 
-            dept_usuario 
-            */
-
+            $usuario->setEsAdmin(false);
+            $usuario->setCtaCorriente(array());
+            $usuario->setListaPedidos(array());
 
             $this->usuarioDAO->Add($usuario);
             $usuario = $this->usuarioDAO->read($email, $pass);
     
             $_SESSION['log'] = true;
-            $_SESSION['id'] = $idUser;
+            $_SESSION['id'] = $usuario->getId();
             $_SESSION['name'] = $nombre;
             $_SESSION['email'] = $email;
             $_SESSION['esAdmin'] = false;
@@ -129,7 +113,7 @@ class LoginController {
 
         }catch(Exception $ex){
 
-          //  ToolsController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Tools/Index/");
+          // ToolsController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Tools/Index/");
         }
     }
 

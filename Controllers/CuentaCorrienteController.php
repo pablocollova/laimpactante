@@ -1,5 +1,5 @@
 <?php
-<?php
+
 namespace Controllers;
 
 use \Exception as Exception;
@@ -16,4 +16,6 @@ class CuentaCorrienteController{
         $this->CuentaCorrienteDAO = new CuentaCorrienteDAO();
     }
 
-    
+}
+
+?>

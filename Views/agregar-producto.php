@@ -2,7 +2,7 @@
 <h2>Agregar Producto</h2>
 <br>
 
-<form action="<?php echo FRONT_ROOT ?>Producto/Add" method="post">
+<form action="<?php echo FRONT_ROOT ?>Producto/Add" method="post" enctype="multipart/form-data">
   <div>                         
       <div>
         <label>Código</label>
@@ -36,7 +36,7 @@
 
       <div>
         <label>Categoría</label>
-        <select name="categoria" required>
+        <select name="categoria" multiple required>
           <option value="" disabled selected>Seleccione una categoría</option>
           <?php
             foreach ($categorias as $categoria){
@@ -54,6 +54,13 @@
         <input type="radio" name="paraVenta" value="false" id="false">
         <label for="false">No</label>
       </fieldset>
+      
+      <br>
+      <div>
+        <label>Seleccione imágenes del producto</label>
+        <input type="file" id="imagenes" name="imagenes" accept="image/png, image/jpeg, image/jpg" multiple>
+
+      </div>
 
 
   </div>

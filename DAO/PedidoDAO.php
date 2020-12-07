@@ -27,8 +27,12 @@
                 $this->connection->ExecuteNonQuery($query, $parameters);
                 
                 $id = $this->lastId();
-                foreach($pedido->getListaDetalles() as $detalle){
-                    $detallePedidoDAO->Add($detalle, $id);
+
+                if (!empty($pedido->getListaDetalles())){
+    
+                    foreach($pedido->getListaDetalles() as $detalle){
+                        $detallePedidoDAO->Add($detalle, $id);
+                    }
                 }
 
             }catch(Exception $ex){
@@ -71,10 +75,11 @@
         }
 
 
-        public function GetPedidosPorEstado($estado){
+        public function GetPedidosUsuarioPorEstado($estado, $idUser){
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE estado_pedido = :estado";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE estado_pedido = :estado AND id_cliente = :id";
             $parameters["estado"] = $estado;
+            $parameters["id"] = $idUser;
 
             try{
                 $this->connection = Connection::GetInstance();
@@ -128,7 +133,7 @@
 
         public function Edit(Pedido $pedido){
             
-            $query = "UPDATE " . $this->tableName . " SET fecha_pedido = :fecha, estado_pedido = :fecha, total = :total, descuento_venta = :descuento, nro_remito = :nroRemito WHERE id_venta = :id";
+            $query = "UPDATE " . $this->tableName . " SET fecha_pedido = :fecha, estado_pedido = :estado, total = :total, descuento_venta = :descuento, nro_remito = :nroRemito WHERE id_venta = :id";
             
             $parameters["fecha"] = $pedido->getFecha();
             $parameters["estado"] = $pedido->getEstado();

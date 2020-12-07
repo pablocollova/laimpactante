@@ -1,10 +1,10 @@
+<!-- Este listado solo lo ve el admin ya que incluye productos que no están para la venta -->
 
   <h2>Listado de productos</h2>
 
 <br>
 <div>
 
-  <form method="post">
     <table class="table table-hover">
   
       <thead>
@@ -35,6 +35,5 @@
       </tbody>
 
     </table>
-  </form> 
 
 </div>

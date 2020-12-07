@@ -22,7 +22,7 @@
 
         public function __construct($id = null, $nombre = null, $apellido = null, $email = null, $password = null,
         $dni = null, $telefono = null, $calle = null, $altura = null, $piso = null, $dpto = null, $razonSocial = null,
-        $esAdmin = null, CuentaCorriente $ctaCorriente = null, $listaPedidos = null){
+        $esAdmin = null, $ctaCorriente = null, $listaPedidos = null){
 
             $this->id = $id;
             $this->nombre = $nombre;
@@ -93,7 +93,7 @@
             $this->esAdmin = $esAdmin;
         }
 
-        public function setCtaCorriente(CuentaCorriente $ctaCorriente){
+        public function setCtaCorriente($ctaCorriente){
             $this->ctaCorriente = $ctaCorriente;
         }
 

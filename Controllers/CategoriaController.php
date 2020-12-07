@@ -18,29 +18,67 @@
 
         public function ShowAddView(){
             
-            require_once(VIEWS_PATH. 'nav-admin.php');
-            require_once(VIEWS_PATH. 'agregar-categoria.php');
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+                require_once(VIEWS_PATH. 'agregar-categoria.php');
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
         }
 
+
         public function ShowEditView($id){
-            
-            $categoria = $this->categoriaDAO->GetOne($id);
-            require_once(VIEWS_PATH. 'nav-admin.php');
-            require_once(VIEWS_PATH. 'editar-categoria.php');
+
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+                $categoria = $this->categoriaDAO->GetOne($id);
+                require_once(VIEWS_PATH. 'editar-categoria.php');
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
         }
+
 
         public function ShowListView(){
 
-            $categorias = $this->categoriaDAO->GetAll();
-            require_once(VIEWS_PATH. 'nav-admin.php');
-            require_once(VIEWS_PATH. 'listar-categorias.php');
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+                $categorias = $this->categoriaDAO->GetAll();
+                require_once(VIEWS_PATH. 'listar-categorias.php');
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
         }
 
         public function ShowRemoveView($id){
 
-            $categoria = $this->categoriaDAO->GetOne($id);
-            require_once(VIEWS_PATH. 'nav-admin.php');
-            require_once(VIEWS_PATH. 'eliminar-categoria.php');
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+                $categoria = $this->categoriaDAO->GetOne($id);
+                require_once(VIEWS_PATH. 'eliminar-categoria.php');
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
         }
 
 

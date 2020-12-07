@@ -6,9 +6,10 @@
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productos</a>
     <div class="dropdown-menu">
     <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Producto/ShowCatalogo">productos en catalogo</a>
-      
-</div>
-  </li> 
+    </div>
+</li>
+
+
 <form class="form-inline my-2 my-lg-0 ml-auto">
       <input class="form-control mr-sm-2" type="search" name="buscar" placeholder="" aria-label="Search">
 <button type="submit" class="btn btn-outline-warning my-2 my-sm-0"><i class="fa fa-search" aria-hidden="true"></i></button>

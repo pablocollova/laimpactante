@@ -1,19 +1,8 @@
 <?php
     namespace Controllers;
 
-    class ToolsController
-    {
-        public function Index($message = "")
-        {
-            $_SESSION['log'] = false;
-            $_SESSION['esAdmin'] = false;
+    class ToolsController{
 
-            $cartelera = new FuncionController();
-
-            $cartelera->ShowCartelera();
-
-            //require_once(VIEWS_PATH."index.php");
-        }
         
         public static function ShowErrorView($mensaje, $exMessage, $pathRedirect){ //Parametros: Mensaje para el usuario, mensaje de la excepción, string con Controller/ShowXView
             
@@ -33,8 +22,8 @@
 
             require_once(ROOT . '/Views/error-view.php');
             require_once(ROOT . '/Views/footer.php');
-
         }
+        
 
         public static function validateString($string){
 

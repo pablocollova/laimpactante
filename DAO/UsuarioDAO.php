@@ -99,6 +99,28 @@
         }
 
 
+        public function read($email, $pass){
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE email = :email AND pass_usuario = :pass";
+            $parameters["email"] = $email;
+            $parameters["pass"] = $pass;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+            }catch (Exception $ex){ 
+                throw $ex;
+            }
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }
+        }
+
+
         public function Edit(Usuario $usuarioActualizado){
             
             $query = "UPDATE " . $this->tableName . " SET nombre_usuario = :nombre, apellido_usuario = :apellido, razonSocial_usuario = :razonSocial, dni_usuario = :dni, isAdmin = :esAdmin, email = :email, pass_usuario = :pass, telefono_usuario = :telefono, domicilio_usuario = :domicilio, altura_usuario = :altura, piso_usuario = piso, dept_usuario = :dpto WHERE id_usuario = :id";

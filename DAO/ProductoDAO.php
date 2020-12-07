@@ -27,9 +27,29 @@
                 $parameters["para_venta"] = $producto->getParaVenta();
                 $parameters["minimo_unidades"] = $producto->getMinUnidades();
 
+                $this->AddImagenes($producto->getImagenes(), $this->lastId());
+
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
             
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+
+        public function AddImagenes($imagenes, $idProducto){
+
+            try{
+                $query = "INSERT INTO imagenes (id_producto, imagen) VALUES :idProducto, :imagen";
+                $parameters["idProducto"] = $idProducto;
+
+                foreach($imagenes as $imagen){
+                    $parameters["imagen"] = $imagen;
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                }
+
             }catch(Exception $ex){
                 throw $ex;
             }
@@ -90,6 +110,54 @@
             }else{
                 return false;
             }
+        }
+
+
+        public function GetProductosEnVenta(){
+            
+            try{
+                $productoList = array();
+
+                $query = "SELECT * FROM ".$this->tableName. " WHERE para_venta = 1";
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){        
+
+                    $producto = new Producto();
+                    $producto->setId($row["id_producto"]);
+                    $producto->setCodigo($row["codigo_producto"]);
+                    $producto->setNombre($row["nombre_producto"]);
+                    $producto->setDescripcion($row["descripcion_producto"]);
+                    $producto->setStock($row["cantidad_producto"]);
+                    $producto->setPrecioUnitario($row["precio_producto"]);
+                    $producto->setMinUnidades($row["minimo_unidades"]);
+                    $producto->setCategoria($row["categoria_producto"]);
+                    $producto->setParaVenta($row["para_venta"]);
+
+                    array_push($productoList, $producto);
+                }
+                return $productoList;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+        
+
+        public function lastId(){
+
+            try{
+                $query = "SELECT MAX(id_producto) AS id FROM " . $this->tableName;
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+            
+            }catch(Exception $ex){
+                throw $ex;
+            }
+
+           return $resultSet[0]['id'];
         }
 
 

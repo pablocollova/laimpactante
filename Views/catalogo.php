@@ -1,37 +1,38 @@
-<br>
-<div class="d-flex justify-content-between">
-    <h2>Catalogo de Productos</h2>
-    <div class="col-md-2">
+<!-- Listado de productos en venta -->
 
-    </div>
-</div>
+<h2>CATÁLOGO</h2>
 
 <br>
-<div id="Productos" class="row col-12">
+<div>
 
- <?php
-        //foreach($productos as $producto)
-        //{
-         // echo $producto->getNombre();
-        //}
+    <table class="table table-hover">
+  
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Precio Unitario</th>
+          <th>Opciones</th>
 
-  ?>
+        </tr>
+      </thead> 
 
-  <div class="card col-3">
-<br>
+      <tbody>
+        <?php foreach ($productos as $producto){ ?>    
+                <tr>
+                  <td> <?= $producto->getCodigo(); ?> </td>
+                  <td> <?= $producto->getNombre(); ?> </td>
+                  <td> $ <?= $producto->getPrecioUnitario(); ?> </td>
+                  <td>
+                  
+                    <a href="<?= FRONT_ROOT ?>Producto/ShowInfo/ <?= $producto->getId() ?>">Ver</a>
 
-  <div class="card-body">
+                  </td>
+                </tr>
+              
+        <?php } ?>
+      </tbody>
 
-    </div>
-<span>
-<div class="row col-12">
+    </table>
 
-
-</div>
-</span>
-<br>
-</div>
-
-
- <br><br>
 </div>

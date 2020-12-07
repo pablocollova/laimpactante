@@ -45,11 +45,11 @@
     </div>
     <div class="form-group col-md-1">
       <label for="piso">Piso</label>
-      <input type="number" class="form-control" name="piso" placeholder="" min="0" required>
+      <input type="number" class="form-control" name="piso" placeholder="" min="0">
     </div>
     <div class="form-group col-md-1">
       <label for="dto">Dto</label>
-      <input type="number" class="form-control" name="dto" placeholder="" min="0" required>
+      <input type="number" class="form-control" name="dto" placeholder="" min="0">
     </div>
     <div class="form-group col-md-4">
       <label for="telefono">Telefono</label>
@@ -61,7 +61,7 @@
   <div class="form-row">
   <div class="form-group col-md-4">
       <label for="razonSocial">Razon Social</label>
-      <input type="password" class="form-control" name="password" placeholder="" required>
+      <input type="text" class="form-control" name="razonSocial" placeholder="" required>
     </div>
     <div class="form-group col-md-4">
       <label for="email">Email</label>
