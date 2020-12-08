@@ -69,7 +69,7 @@
             </div>
         </div>        
         <div class="form-group">
-            <button type="submit" class="btn btn-danger login-btn btn-block">Ingresar</button>
+            <button type="submit" class="btn btn-warning login-btn btn-block">Ingresar</button>
         </div>
         </form>
 	<hr>	

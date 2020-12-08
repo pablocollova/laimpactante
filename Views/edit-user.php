@@ -33,7 +33,7 @@
   <input type="hidden" name="idFB" value=<?php echo $user->getIdFB() ?> > 
   <br>
   <div class="form-group col-md-12 d-flex justify-content-center">
-  <button type="submit" class="btn btn-danger col-md-4">Guardar Cambios</button>
+  <button type="submit" class="btn btn-warning col-md-4">Guardar Cambios</button>
   </div>
   <br>
 </form>

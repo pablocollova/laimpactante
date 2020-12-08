@@ -58,7 +58,7 @@
       <br>
       <div>
         <label>Seleccione imágenes del producto</label>
-        <input type="file" id="imagenes" name="imagenes" accept="image/png, image/jpeg, image/jpg" multiple>
+        <input type="file" id="imagenes" name="imagenes[]" accept="image/png, image/jpeg, image/jpg" multiple>
 
       </div>
 

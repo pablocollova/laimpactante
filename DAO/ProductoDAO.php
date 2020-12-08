@@ -27,7 +27,7 @@
                 $parameters["para_venta"] = $producto->getParaVenta();
                 $parameters["minimo_unidades"] = $producto->getMinUnidades();
 
-                $this->AddImagenes($producto->getImagenes(), $this->lastId());
+             //   $this->AddImagenes($producto->getImagenes(), $this->lastId());
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
@@ -38,7 +38,7 @@
         }
 
 
-        public function AddImagenes($imagenes, $idProducto){
+       /* public function AddImagenes($imagenes, $idProducto){
 
             try{
                 $query = "INSERT INTO imagenes (id_producto, imagen) VALUES :idProducto, :imagen";
@@ -53,7 +53,7 @@
             }catch(Exception $ex){
                 throw $ex;
             }
-        }
+        }*/
 
 
         public function GetAll(){

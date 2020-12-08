@@ -13,8 +13,9 @@
         private $minUnidades;
         private $categoria;
         private $paraVenta;
+        private $imagen;
 
-        public function __construct($id = null, $codigo = null, $nombre = null, $descripcion = null, $stock = null, $precioUnitario = null, $minUnidades = null, $categoria = null, $paraVenta = null){
+        public function __construct($id = null, $codigo = null, $nombre = null, $descripcion = null, $stock = null, $precioUnitario = null, $minUnidades = null, $categoria = null, $paraVenta = null, $imagenes=null){
             
             $this->id = $id;
             $this->codigo = $codigo;
@@ -25,6 +26,7 @@
             $this->minUnidades = $minUnidades;
             $this->categoria = $categoria;
             $this->paraVenta = $paraVenta;
+            $this->imagen= $imagenes;
         }
 
         public function setId($id){
@@ -63,6 +65,9 @@
             $this->paraVenta = $paraVenta;
         }
 
+        public function setImagenes($imagenes){
+            $this->imagen= $imagenes;
+        }
         public function getId(){
             return $this->id;
         }
@@ -97,6 +102,10 @@
 
         public function getParaVenta(){
             return $this->paraVenta;
+        }
+
+        public function getImagenes(){
+            return $this->imagen;
         }
     }
 

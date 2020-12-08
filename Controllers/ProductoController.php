@@ -6,6 +6,7 @@
     use DAO\ProductoDAO as ProductoDAO;
     use DAO\CategoriaDAO as CategoriaDAO;
     use Models\Producto as Producto;
+    use \Images as imageFolder;
 
     class ProductoController{
 
@@ -111,7 +112,7 @@
         }
 
 
-        public function Add($codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta){
+        public function Add($codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta, $imagenes){
 
             if($paraVenta == "true"){
                 $paraVenta = true;
@@ -119,8 +120,53 @@
                 $paraVenta = false;
             }
 
-            $producto = new Producto('', $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta);
-            $this->productoDAO->Add($producto, $imgContenido);
+            $producto = new Producto('', $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta, $imagenes);
+            
+            /////////////////////////////////////////////
+
+            
+            if(isset($_FILES["imagenes"]) && $_FILES["imagenes"]["name"][0])
+            {
+         
+                # recorremos todos los arhivos que se han subido
+                for($i=0;$i<count($_FILES["imagenes"]["name"]);$i++)
+                {
+         
+                    # si es un formato de imagen
+            if($_FILES["imagenes"]["type"][$i]=="image/jpeg" || $_FILES["imagenes"]["type"][$i]=="image/pjpeg" || $_FILES["imagenes"]["type"][$i]=="image/gif" || $_FILES["imagenes"]["type"][$i]=="image/png")
+            {
+ 
+                # si exsite la carpeta o se ha creado
+                if(file_exists(IMAGES_PATH) || @mkdir(IMAGES_PATH))
+                {
+                    $origen=$_FILES["imagenes"]["tmp_name"][$i];
+                    $file_explode=explode(".",$_FILES["imagenes"]["name"][$i]);
+                    $destino=IMAGES_PATH.$nombre ."-image-".$i.".".$file_explode[1];
+ 
+                    # movemos el archivo
+                    if(@move_uploaded_file($origen, $destino))
+                    {
+                        echo "<br>".$_FILES["imagenes"]["name"][$i]." movido correctamente";
+                    }else{
+                        echo "<br>No se ha podido mover el archivo: ".$_FILES["imagenes"]["name"][$i];
+                    }
+                }else{
+                    echo "<br>No se ha podido crear la carpeta: ".$carpetaDestino;
+                }
+            }else{
+                echo "<br>".$_FILES["imagenes"]["name"][$i]." - NO es imagen jpg, png o gif";
+            }
+        }
+    }else{
+        echo "<br>No se ha subido ninguna imagen";
+    }
+
+
+            ///////////////////////////////////////////////
+
+
+
+            $this->productoDAO->Add($producto);
             $this->ShowListView();
         }
 
