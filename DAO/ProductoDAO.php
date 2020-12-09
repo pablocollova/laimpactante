@@ -27,8 +27,6 @@
                 $parameters["para_venta"] = $producto->getParaVenta();
                 $parameters["minimo_unidades"] = $producto->getMinUnidades();
 
-             //   $this->AddImagenes($producto->getImagenes(), $this->lastId());
-
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
             
@@ -38,22 +36,33 @@
         }
 
 
-       /* public function AddImagenes($imagenes, $idProducto){
+        public function arrayImagenes($nombreProducto){
 
-            try{
-                $query = "INSERT INTO imagenes (id_producto, imagen) VALUES :idProducto, :imagen";
-                $parameters["idProducto"] = $idProducto;
+            $imagenes = array();
+            $flag = true;
+            $i = 0;
 
-                foreach($imagenes as $imagen){
-                    $parameters["imagen"] = $imagen;
-                    $this->connection = Connection::GetInstance();
-                    $this->connection->ExecuteNonQuery($query, $parameters);
-                }
+            while ($flag){
+                $filePath = IMAGES_PATH . $nombreProducto. "-image-$i";
 
-            }catch(Exception $ex){
-                throw $ex;
+                if (file_exists($filePath.".jpg")){
+                    array_push($imagenes, $filePath.".jpg");
+                    $i++;
+
+                } elseif (file_exists($filePath.".png")){
+                    array_push($imagenes, $filePath.".png");
+                    $i++;
+
+                }elseif (file_exists($filePath.".jpeg")){
+                    array_push($imagenes, $filePath.".jpeg");
+                    $i++;
+
+                }else{
+                    $flag = false;
+                }  
             }
-        }*/
+            return $imagenes;
+        }
 
 
         public function GetAll(){
@@ -78,6 +87,7 @@
                     $producto->setMinUnidades($row["minimo_unidades"]);
                     $producto->setCategoria($row["categoria_producto"]);
                     $producto->setParaVenta($row["para_venta"]);
+                    $producto->setImagenes($this->arrayImagenes($producto->getNombre()));
 
                     array_push($productoList, $producto);
                 }
@@ -92,6 +102,8 @@
         {
             
         }
+
+        
         public function GetOne($id){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_producto = :id";
@@ -162,18 +174,26 @@
 
 
         public function Remove($id){
-
+        
             $query = "DELETE FROM " . $this->tableName . " WHERE id_producto = :id";
             $parameters["id"] = $id;
+            $producto = $this->GetOne($id);
+            $imagenes = $producto->getImagenes();
 
             try{
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
+                
+                foreach ($imagenes as $imagen){
+                    unlink($imagen);
+                }
 
             } catch (Exception $ex){ 
                 throw $ex;
             }
         }
+
+
         public function getProductos()
         {
             echo "todos los productos";
@@ -220,6 +240,7 @@
             $categoriaDAO = new CategoriaDAO();
             foreach($resp as $producto){
                 $producto->setCategoria($categoriaDAO->GetOne($producto->getCategoria())->getNombre());
+                $producto->setImagenes($this->arrayImagenes($producto->getNombre()));
             }
             return count($resp) > 1 ? $resp : $resp["0"];
         }

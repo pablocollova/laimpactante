@@ -109,10 +109,28 @@
             $pedido = $this->pedidoDAO->GetOne($id);
             $pedido->setEstado($this->estadoPedidoDAO->getIdPorEstado("En espera"));
             $pedido->setFecha(date("Y-m-d H:i:s"));
-            //falta setearle a pedido el importe y los descuentos
+            $pedido->setImporte($this->calcularImporte($pedido->getListaDetalles()));
+            $pedido->setDescuento($this->calcularDescuento($pedido->getListaDetalles()));
             $this->pedidoDAO->Edit($pedido);
             $this->ShowListView();
+        }
 
+        public function calcularImporte($detalles){
+
+            $importe = 0;
+            foreach ($detalles as $detalle){
+                $importe += $detalle->getImporte();
+            }
+            return $importe;    
+        }
+
+        public function calcularDescuento($detalles){
+
+            $descuento = 0;
+            foreach ($detalles as $detalle){
+                $descuento += $detalle->getDescuento();
+            }
+            return $descuento;
         }
 
 
