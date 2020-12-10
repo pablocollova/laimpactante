@@ -84,6 +84,10 @@ CREATE TABLE ventas
 	constraint fk_estadopedido foreign key  (estado_pedido) references estados_pedido(id_estadopedido)
 );
 
+select * from usuarios u
+inner join ventas v
+on u.id_usuario = v.idCliente;
+
 CREATE TABLE pedidos
 (
 	id_pedido int unsigned AUTO_INCREMENT,

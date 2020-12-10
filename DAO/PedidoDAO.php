@@ -132,6 +132,7 @@
             }            
         }
 
+
         public function GetOne($id){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_venta = :id";
@@ -212,7 +213,7 @@
             $estadoPedidoDAO = new EstadoPedidoDAO();
             foreach($resp as $pedido){
                 $pedido->setListaDetalles($detallePedidoDAO->GetDetallesPorPedido($pedido->getId()));
-                $pedido->setEstado($estadoPedido->getEstadoPorId($pedido->getEstado()));
+                $pedido->setEstado($estadoPedidoDAO->getEstadoPorId($pedido->getEstado()));
             }
 
             return count($resp) > 1 ? $resp : $resp["0"];

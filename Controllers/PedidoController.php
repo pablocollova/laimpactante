@@ -10,6 +10,7 @@
     use Models\Producto as Producto;
     use DAO\ProductoDAO as ProductoDAO;
     use DAO\EstadoPedidoDAO as EstadoPedidoDAO;
+    use DAO\UsuarioDAO as UsuarioDAO;
 
     class PedidoController{
 
@@ -17,6 +18,7 @@
         private $detallePedidoDAO;
         private $productoDAO;
         private $estadoPedidoDAO;
+        private $usuarioDAO;
         
         public function __construct(){
 
@@ -24,6 +26,7 @@
             $this->detallePedidoDAO = new DetallePedidoDAO();
             $this->productoDAO = new ProductoDAO();
             $this->estadoPedidoDAO = new EstadoPedidoDAO();
+            $this->usuarioDAO = new UsuarioDAO();
         }
 
         public function AddDetallePedido($idProducto, $cantidad){
@@ -112,7 +115,7 @@
             $pedido->setImporte($this->calcularImporte($pedido->getListaDetalles()));
             $pedido->setDescuento($this->calcularDescuento($pedido->getListaDetalles()));
             $this->pedidoDAO->Edit($pedido);
-            $this->ShowListView();
+            $this->ShowListaUsuarioView();
         }
 
         public function calcularImporte($detalles){
@@ -134,7 +137,7 @@
         }
 
 
-        public function ShowListView(){
+        public function ShowListaUsuarioView(){
 
             if ($_SESSION['log'] == false){
                 
@@ -158,7 +161,7 @@
         }
 
 
-        public function ShowDetallesView($id){
+        public function ShowDetallesUsuarioView($id){
 
             if ($_SESSION['log'] == false){
                 
@@ -179,6 +182,48 @@
                 require_once(VIEWS_PATH. 'listar-detalles-pedido.php');
             }
             require_once(VIEWS_PATH. 'footer.php');
+        }
+
+
+        public function ShowListaAdminView(){
+
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+
+                $estados = $this->estadoPedidoDAO->GetAll();
+                $pedidos = $this->pedidoDAO->GetAll();
+
+                require_once(VIEWS_PATH. 'listar-pedidos-admin.php');
+
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
+        }
+
+        public function ShowDetallesAdminView($id){
+
+            if ($_SESSION['esAdmin'] == true){
+                
+                require_once(VIEWS_PATH. 'header.php');
+                require_once(VIEWS_PATH. 'nav-admin.php');
+
+                $pedido = $this->pedidoDAO->GetOne($id);
+                $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedido->getId());
+                $detalles = $pedido->getListaDetalles();
+
+                require_once(VIEWS_PATH. 'detalles-pedido-admin.php');
+
+            }else{
+                require_once(VIEWS_PATH. 'header-login.php');
+                require_once(VIEWS_PATH. 'nav-principal.php');
+                require_once(VIEWS_PATH. 'login.php');
+            }
+            require_once(VIEWS_PATH . 'footer.php');
         }
     }
 
