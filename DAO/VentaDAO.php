@@ -14,11 +14,11 @@
         public function Add(Venta $venta){
 
             try{
-                $query = "UPDATE " .$this->tableName." SET fecha = :fecha, nro_factura_venta = :nroFactura, estado_pedido = :estado";
+                $query = "UPDATE " .$this->tableName." SET fecha = :fecha, nro_factura_venta = :nroFactura WHERE id_venta = :idVenta";
                 
                 $parameters["fecha"] = $venta->getFecha();
                 $parameters["nroFactura"] = $venta->getNroFactura();
-                //$parameters["estado"] = A lo que definamos como estado de "aceptado".
+                $parameters["idVenta"] = $venta->getPedido()->getId();
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);

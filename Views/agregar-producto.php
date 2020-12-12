@@ -36,7 +36,7 @@
 
       <div>
         <label>Categoría</label>
-        <select name="categoria" multiple required>
+        <select name="categoria" required>
           <option value="" disabled selected>Seleccione una categoría</option>
           <?php
             foreach ($categorias as $categoria){

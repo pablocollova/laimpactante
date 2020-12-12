@@ -14,11 +14,12 @@
         public function Add(Pedido $pedido, $idUser){
 
             $detallePedidoDAO = new DetallePedidoDAO();
+            $estadoPedidoDAO = new EstadoPedidoDAO();
             try{
                 $query = "INSERT INTO ".$this->tableName." (fecha_pedido, estado_pedido, total, descuento_venta, id_cliente) VALUES (:fecha, :estado, :importe, :descuento, :idCliente);";
                 
                 $parameters["fecha"] = $pedido->getFecha();
-                $parameters["estado"] = $pedido->getEstado();
+                $parameters["estado"] = $estadoPedidoDAO->getIdPorEstado($pedido->getEstado());
                 $parameters["importe"] = $pedido->getImporte();
                 $parameters["descuento"] = $pedido->getDescuento();
                 $parameters["idCliente"] = $idUser;
@@ -133,6 +134,27 @@
         }
 
 
+        public function GetPedidosPorEstado($estado){
+
+            $query = "SELECT * FROM " . $this->tableName . " WHERE estado_pedido = :estado";
+            $parameters["estado"] = $estado;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+            }catch (Exception $ex){ 
+                throw $ex;
+            }
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }            
+        }
+
+
         public function GetOne($id){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE id_venta = :id";
@@ -168,12 +190,15 @@
             }
         }
 
+
         public function Edit(Pedido $pedido){
             
             $query = "UPDATE " . $this->tableName . " SET fecha_pedido = :fecha, estado_pedido = :estado, total = :total, descuento_venta = :descuento, nro_remito = :nroRemito WHERE id_venta = :id";
             
+            $estadoPedidoDAO = new EstadoPedidoDAO();
+
             $parameters["fecha"] = $pedido->getFecha();
-            $parameters["estado"] = $pedido->getEstado();
+            $parameters["estado"] = $estadoPedidoDAO->getIdPorEstado($pedido->getEstado());
             $parameters["total"] = $pedido->getImporte();
             $parameters["descuento"] = $pedido->getDescuento();
             $parameters["nroRemito"] = $pedido->getNroRemito();
@@ -206,7 +231,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Pedido($p["id_venta"], $p["fecha"], '', $p["estado_pedido"], $p["total"], $p["descuento_venta"], $p["nro_remito"]);
+                return new Pedido($p["id_venta"], $p["fecha_pedido"], '', $p["estado_pedido"], $p["total"], $p["descuento_venta"], $p["nro_remito"]);
             }, $value);
             
             $detallePedidoDAO = new DetallePedidoDAO();

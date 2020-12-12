@@ -6,7 +6,7 @@ use \Exception as Exception;
 use DAO\UsuarioDAO as UsersDAO;
 use Models\User as User;
 
-class UserController {
+class UsuarioController {
 
     private $usersDAO;
 
@@ -17,29 +17,26 @@ class UserController {
 
     public function perfil($id){
 
-        try{
+        if ($_SESSION['log'] == false){
+                
+            require_once(VIEWS_PATH. 'header-login.php');
+            require_once(VIEWS_PATH. 'nav-principal.php');
+            require_once(VIEWS_PATH. 'login.php');
+        }else{
 
-            require_once(ROOT . '/Views/header.php');
-            $user = $this->usersDAO->GetOne($id);
-    
-            if ($_SESSION['esAdmin'] == true){
-    
-                require_once(ROOT . '/Views/nav-admin.php');
+            require_once(VIEWS_PATH. 'header.php');
             
+            if($_SESSION['esAdmin'] == true){
+                require_once(VIEWS_PATH. 'nav-admin.php');
             }else{
-    
-                require_once(ROOT . '/Views/nav-user.php');
-    
+                require_once(VIEWS_PATH. 'nav-user.php');
             }
-    
-            require_once(ROOT . '/Views/perfil-user.php');
-            require_once(ROOT . '/Views/footer.php');
 
-        }catch(Exception $ex){
+            $usuario = $this->usersDAO->GetOne($id);
+            require_once(VIEWS_PATH. 'perfil-usuario.php');
 
-            ToolsController::ShowErrorView("Error al obtener la información del usuario.", $e->getMessage(), "Tools/Index/");
         }
-        
+        require_once(VIEWS_PATH. 'footer.php');
 
     }
 
