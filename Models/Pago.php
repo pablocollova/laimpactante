@@ -10,6 +10,7 @@
         private $medioDePago;
         private $listaDetalles;   //Array de DetallePago
         private $nroRecibo;
+        private $idCliente;
 
         public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null){
             
@@ -19,6 +20,7 @@
             $this->medioDePago = $medioDePago;
             $this->listaDetalles = $listaDetalles;
             $this->nroRecibo = $nroRecibo;
+            
         }
 
         public function setId($id){

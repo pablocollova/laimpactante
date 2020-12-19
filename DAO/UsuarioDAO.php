@@ -98,6 +98,26 @@
             }
         }
 
+        public function GetSomeLikeName($name)
+        {
+            $query = "SELECT * FROM " . $this->tableName . " like nombre_usuario  '% :name % '";
+            $parameters["name"] = $name;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+            }catch (Exception $ex){ 
+                throw $ex;
+            }
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }
+        }
+
 
         public function read($email, $pass){
 
@@ -148,7 +168,7 @@
         }
     
         protected function mapear($value){          //Hay que agregar la cuenta corriente
- 
+            var_dump($value);
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
                 return new Usuario($p["id_usuario"], $p["nombre_usuario"], $p["apellido_usuario"], $p["email"], $p["pass_usuario"], $p["dni_usuario"],  $p["telefono_usuario"], $p["domicilio_usuario"], $p["altura_usuario"], $p["piso_usuario"], $p["dept_usuario"], $p["razonSocial_usuario"], $p["isAdmin"]);

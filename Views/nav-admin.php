@@ -36,6 +36,13 @@
     </div>
   </li>
 
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pagos</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pago/ShowAddView">Agregar</a>
+      <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pago/ShowListView">Listar</a>
+  </li>
+
 
 </article>
 <article>

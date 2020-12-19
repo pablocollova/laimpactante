@@ -25,7 +25,7 @@
     <h5 id="hHeader" class="card-text">Accede a ser un revendedor de La Impactante</h5><br>
    
 
-<a type="button" class="btn btn-warning col-5" href="<?php echo FRONT_ROOT ?>Funcion/ShowCatalogo#productos">
+<a type="button" class="btn btn-warning col-5" href="<?php echo FRONT_ROOT ?>Producto/ShowCatalogo#productos">
  Comprar
 </a>
 
@@ -35,6 +35,7 @@
 </div>
 <br>
 <br>
+<script src="js/jquery-1.9.1.min.js"></script>
 </header>
 
 
