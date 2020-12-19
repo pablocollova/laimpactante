@@ -46,6 +46,7 @@
             try{
                 $productoList = array();
                 $detallePedidoDAO = new DetallePedidoDAO();
+                $estadoPedidoDAO = new EstadoPedidoDAO();
                 
                 $query = "SELECT * FROM ".$this->tableName;
                 
@@ -59,7 +60,7 @@
                     $pedido->setId($row["id_venta"]);
                     $pedido->setFecha($row["fecha_pedido"]);
                     $pedido->setListaDetalles($listaDetalle);
-                    $pedido->setEstado($row["estado_pedido"]);
+                    $pedido->setEstado($estadoPedidoDAO->getEstadoPorId($row["estado_pedido"]));
                     $pedido->setImporte($row["total"]);
                     $pedido->setDescuento($row["descuento_venta"]);
                     $pedido->setNroRemito($row["nro_remito"]);
@@ -80,6 +81,7 @@
             try{
                 $productoList = array();
                 $detallePedidoDAO = new DetallePedidoDAO();
+                $estadoPedidoDAO = new EstadoPedidoDAO();
                 
                 $query = "SELECT * FROM ".$this->tableName . " WHERE id_cliente = ". $idUsuario;
                 
@@ -93,7 +95,7 @@
                     $pedido->setId($row["id_venta"]);
                     $pedido->setFecha($row["fecha_pedido"]);
                     $pedido->setListaDetalles($listaDetalle);
-                    $pedido->setEstado($row["estado_pedido"]);
+                    $pedido->setEstado($estadoPedidoDAO->getEstadoPorId($row["estado_pedido"]));
                     $pedido->setImporte($row["total"]);
                     $pedido->setDescuento($row["descuento_venta"]);
                     $pedido->setNroRemito($row["nro_remito"]);
@@ -129,6 +131,7 @@
                 return false;
             }            
         }
+
 
         public function GetOne($id){
 
@@ -207,8 +210,10 @@
             }, $value);
             
             $detallePedidoDAO = new DetallePedidoDAO();
+            $estadoPedidoDAO = new EstadoPedidoDAO();
             foreach($resp as $pedido){
                 $pedido->setListaDetalles($detallePedidoDAO->GetDetallesPorPedido($pedido->getId()));
+                $pedido->setEstado($estadoPedidoDAO->getEstadoPorId($pedido->getEstado()));
             }
 
             return count($resp) > 1 ? $resp : $resp["0"];

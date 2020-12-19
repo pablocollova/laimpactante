@@ -32,7 +32,8 @@
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pedidos</a>
     <div class="dropdown-menu">
     <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pedido/ShowPedidoEnProcesoView">Ver pedido actual</a>
-    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pedido/ShowListView">Ver lista de pedidos</a>
+    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pedido/ShowListaUsuarioView">Ver lista de pedidos</a>
+    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Pedido/ShowListaAdminView">Administrar pedidos</a>
     </div>
   </li>
 

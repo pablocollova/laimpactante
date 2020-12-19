@@ -3,6 +3,11 @@
 <br>
 
 <div>
+    <?php foreach($producto->getImagenes() as $imagen){ ?>
+
+    <img src= "<?= FRONT_ROOT.$imagen?>" alt= "<?= $producto->getNombre()?>" style="width:128px;height:128px;"> 
+
+    <?php } ?>
 
     <h3><?= $producto->getNombre() ?></h3>
     <h5><?= $producto->getCodigo()?></h5>

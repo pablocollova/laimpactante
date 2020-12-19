@@ -119,6 +119,30 @@
         }
 
 
+        public function GetUsuarioPorPedido($idPedido){
+
+            $query = "
+            SELECT * FROM usuarios u
+            INNER JOIN ventas v
+            ON u.id_usuario = v.id_cliente
+            WHERE id_venta = " . $idPedido;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+
+            }catch (Exception $ex){ 
+                throw $ex;
+            }
+
+            if (!empty($resultSet)){
+                return $this->mapear($resultSet);
+            }else{
+                return false;
+            }            
+        }
+
+
         public function read($email, $pass){
 
             $query = "SELECT * FROM " . $this->tableName . " WHERE email = :email AND pass_usuario = :pass";
