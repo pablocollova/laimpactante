@@ -192,7 +192,7 @@
         }
     
         protected function mapear($value){          //Hay que agregar la cuenta corriente
-            var_dump($value);
+            //var_dump($value);
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
                 return new Usuario($p["id_usuario"], $p["nombre_usuario"], $p["apellido_usuario"], $p["email"], $p["pass_usuario"], $p["dni_usuario"],  $p["telefono_usuario"], $p["domicilio_usuario"], $p["altura_usuario"], $p["piso_usuario"], $p["dept_usuario"], $p["razonSocial_usuario"], $p["isAdmin"]);

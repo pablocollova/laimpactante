@@ -9,6 +9,6 @@ include('nav-principal.php');
 
 include('catalogo.php');
 
-include('footer.php');
+include('footer.php'); 
 
 ?>

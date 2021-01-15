@@ -19,7 +19,7 @@ class LoginController {
 
         try{
             $usuario = $this->usuarioDAO->read($email, $pass);
-
+            
             if ($usuario){
                 
                 $_SESSION['log'] = true;

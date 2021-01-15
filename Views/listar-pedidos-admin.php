@@ -1,26 +1,29 @@
+<br>
 
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
   <h2>Listado de pedidos</h2>
-
-<form>
-
-    <div>
-        <label>Filtrar por estado</label>
-        <select name="estado">
+<br>
+<form class="uk-form-horizontal">
+ 
+    <div class="uk-margin-small">
+        <!--<label class="uk-form-label uk-form-width-small">Filtrar por estado</label>-->
+        <select class="uk-select uk-form-width-medium" name="estado">
           <option value="" disabled selected>Seleccione un estado</option>
-          <?php
+          <?php 
             foreach ($estados as $estado){
               echo "<option value=". $estado["id_estadopedido"]. ">". $estado["descripcion"]." </option>";
             }
           ?>
         </select>
+        <button class="uk-button uk-button-default">Filtrar</button>
       </div>
 
-<form>
+          </form>
 
 <br>
 <div>
 
-    <table class="table table-hover">
+<table class="uk-table uk-table-middle uk-table-divider">
   
       <thead>
         <tr>
@@ -41,7 +44,7 @@
                     
                     $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedido->getId());
         ?>
-                    <tr>
+                    <tr class="filahover">
                     <td> <?= $pedido->getFecha(); ?> </td>
                     <td> <?= $cliente->getNombre() . " " . $cliente->getApellido(); ?> </td>
                     <td> <?= $pedido->getImporte(); ?> </td>
@@ -49,7 +52,7 @@
                     <td> <?= $pedido->getNroRemito(); ?> </td>
                     <td> <?= $pedido->getEstado(); ?> </td>
                     <td>
-                        <a href="<?= FRONT_ROOT ?>Pedido/ShowDetallesAdminView/ <?= $pedido->getId() ?>">Ver detalles</a>
+                        <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowDetallesAdminView/ <?= $pedido->getId() ?>">Ver detalles</a>
                     </td>
                     </tr>
               
@@ -59,3 +62,4 @@
     </table>
 
 </div>
+                </div>

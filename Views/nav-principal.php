@@ -1,22 +1,21 @@
 <article>
-<div id="navUsuario" class="container-fluid col-12"> 
-<ul class="nav nav-pills">
+<nav class="uk-navbar uk-background-secondary uk-light uk-margin" uk-navbar>
+    <div class="uk-navbar-left">
 
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productos</a>
-    <div class="dropdown-menu">
-    <a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Producto/ShowCatalogo">productos en catalogo</a>
+        <ul class="uk-navbar-nav uk-padding-large uk-padding-remove-bottom uk-padding-remove-top uk-padding-remove-right">
+            <li>
+                <a href="#">Productos</a>
+                <div class="uk-navbar-dropdown">
+                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                        <li><a href="<?php echo FRONT_ROOT ?>Producto/ShowCatalogo">Productos en Cat&aacute;logo</a></li>
+                        
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </div>
-</li>
+</nav> 
 
-
-<form class="form-inline my-2 my-lg-0 ml-auto">
-      <input class="form-control mr-sm-2" type="search" name="buscar" placeholder="" aria-label="Search">
-<button type="submit" class="btn btn-outline-warning my-2 my-sm-0"><i class="fa fa-search" aria-hidden="true"></i></button>
-
-    </form>
-</ul>
-</div> 
 </article>
 <article>
-<div class="container-fluid card col-12">
+<div class="uk-background-muted  uk-margin-remove-bottom">

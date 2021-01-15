@@ -6,7 +6,7 @@ use \Exception as Exception;
 use DAO\UsuarioDAO as UsersDAO;
 use Models\User as User;
 
-class UserController {
+class UsuarioController {
 
     private $usersDAO;
 

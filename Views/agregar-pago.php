@@ -1,40 +1,36 @@
 <br>
-    <h2>AGREGAR PAGO</h2><br> 
 
-<div id="" class="row col-12 d-flex justify-content-center">
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right">
+    <h2>Agregar Pago</h2>
+    <br> 
+
+<div>
 
 <form action="<?php echo FRONT_ROOT.'Login/signin' ?>" method="post">
-
-
-<div class="form-row">
-    <div class="form-group col-md-12">
-      <label for="nombre">Nombre</label>
-     
-   
-
-    <input type=text list=browsers class="form-control" name="nombre" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required onKeyUp="buscar();">
-    <datalist id=browsers >
-          <option> Google
-          <option> IE9
-    </datalist>
-
-
-
+ 
+<div class="uk-margin-small">
+        <label class="uk-form-label">Nombre</label>
+        <select class="uk-select" name="nombre" required>
+          <?php
+            foreach ($categorias as $categoria){
+              echo "<option value=". $categoria->getNombre(). ">". $categoria->getNombre()." </option>";
+            }
+          ?>
+        </select>
+      </div>
 
     </div>
-   
-  </div>
-
- 
   
-  <br>
-  <div class="form-group col-md-12 d-flex justify-content-center">
-  <button type="submit" class="btn btn-warning col-md-12">Agregar Pago</button>
+  <div class="uk-flex uk-flex-center uk-margin-remove-bottom uk-margin-medium-top">
+  <button type="submit" class="uk-button uk-button-primary">Agregar Pago</button>
   </div>
-  <br>
+  
 </form>
-<br><br>
+
 </div>
+
+</div>
+
 <script>
 
 $(document).ready(function() {

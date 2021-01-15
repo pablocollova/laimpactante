@@ -1,38 +1,36 @@
 <!-- Listado de productos en venta -->
+<br>
 
-<h2>CATÁLOGO</h2>
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
+<h2>Cat&aacute;logo de Productos</h2>
 
 <br>
 <div>
 
-    <table class="table table-hover">
-  
-      <thead>
+<table class="uk-table uk-table-middle uk-table-divider">
+    <thead>
         <tr>
-          <th>Codigo</th>
-          <th>Nombre</th>
-          <th>Precio Unitario</th>
-          <th>Opciones</th>
-
-        </tr>
-      </thead> 
-
-      <tbody>
-        <?php foreach ($productos as $producto){ ?>    
-                <tr>
+            <th>C&oacute;digo</th>
+            <th>Nombre</th>
+            <th>Precio Unitario</th>
+            <th>Opciones</th>
+        </tr> 
+    </thead>
+    <tbody>
+    <?php foreach ($productos as $producto){ ?>  
+      <tr class="filahover">
                   <td> <?= $producto->getCodigo(); ?> </td>
                   <td> <?= $producto->getNombre(); ?> </td>
                   <td> $ <?= $producto->getPrecioUnitario(); ?> </td>
                   <td>
-                  
-                    <a href="<?= FRONT_ROOT ?>Producto/ShowInfo/ <?= $producto->getId() ?>">Ver</a>
+                  <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Producto/ShowInfo/ <?= $producto->getId() ?>">Ver</a>
 
                   </td>
                 </tr>
               
         <?php } ?>
-      </tbody>
+    </tbody>
+</table>
 
-    </table>
-
+</div>
 </div>

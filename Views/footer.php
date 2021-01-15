@@ -2,52 +2,45 @@
 </div>
 <br>
 </article>
-
-<script>
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-})
-</script>
-
-<script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-<footer>
+<footer class="uk-background-secondary uk-light uk-padding-large uk-padding-remove-bottom uk-padding-remove-top uk-padding-remove-right">
 <br>
 <br>
-<div class="footer-main">
-    <div class="container">
-        <div class="row d-flex justify-content-between">
-
-        <div class="col-md-4">
-            <div class="infoarea">
-                <p>desarrollo de software</p>
-		<p>BEYACO</p>
-          </div>
+<div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+    <div>
+        <div class="uk-card">		
+        <h3 style="margin-bottom: 0px;">BEYACO</h3>
+    <small>Desarrollo de Software</small>
+<br>
+<br>
+    <small>Benitez, Noelia - Collova, Pablo - Yarossi, Candela</small>
+    </div>
+    </div>
+    <div>
+        <div class="uk-card">
+        <img src="<?php echo LOGO ?>" alt="La Impactante" width="25%" style="margin-left: 100px">
         </div>
-
-        <div id="logoS" class="d-flex justify-content-center col-md-5" style="margin-left: -50px;">
-	<img src="<?php echo IMAGES.'logo.png' ?>" alt="La Impactante" width="38%" height="60%">
-</div>
-
-        <div class="col-md-3">
-            <div>
-
-             <ul id="integrantesFooter">
+    </div>
+    <div>
+        <div class="uk-card">
+            <!--
+        <ul class="uk-list uk-list-circle">
               <li>Benitez, Noelia.</li>
               <li>Collova, Pablo.</li>
               <li>Yarossi, Candela.</li>
             </ul>
-          </div>
-        </div>
+-->
 
-<br><br><br>
+<h3 class="uk-h3"><b>Contacto</b></h3>
+<ul class="uk-list">
+              <li><span class="" uk-icon="whatsapp"></span>&#160; <a class="uk-link-muted" href="https://api.whatsapp.com/send?phone=542235994511">+54 (223) 5994511</a></li>
+              <li><span class="" uk-icon="facebook"></span>&#160; <a class="uk-link-muted" href="https://www.facebook.com/impactantelimpieza/">La Impactante Limpieza</a></li>
+              <li></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 </footer>
 </body>
 </html>

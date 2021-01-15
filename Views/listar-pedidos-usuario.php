@@ -1,10 +1,12 @@
+<br>
 
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
   <h2>Listado de pedidos</h2>
 
 <br>
-<div>
+<div> 
 
-    <table class="table table-hover">
+<table class="uk-table uk-table-middle uk-table-divider">
   
       <thead>
         <tr>
@@ -23,14 +25,14 @@
                 if($pedido->getEstado() != $this->estadoPedidoDAO->getIdPorEstado("Actual")){
                 
         ?>
-                <tr>
+                <tr class="filahover">
                   <td> <?= $pedido->getFecha(); ?> </td>
                   <td> <?= $pedido->getImporte(); ?> </td>
                   <td> <?= $pedido->getDescuento(); ?> </td>
                   <td> <?= $pedido->getNroRemito(); ?> </td>
                   <td> <?= $pedido->getEstado(); ?> </td>
                   <td>
-                    <a href="<?= FRONT_ROOT ?>Pedido/ShowDetallesView/ <?= $pedido->getId() ?>">Ver detalles</a>
+                    <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowDetallesView/ <?= $pedido->getId() ?>">Ver detalles</a>
                   </td>
                 </tr>
               
@@ -40,3 +42,4 @@
     </table>
 
 </div>
+                </div>

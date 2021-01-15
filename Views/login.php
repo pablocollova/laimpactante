@@ -1,39 +1,31 @@
 <br>
-    <h2>ACCEDER</h2><br> 
 
-<div id="" class="row col-12 d-flex justify-content-center">
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
+    <h2 class="uk-modal-title uk-flex uk-flex-center">Acceder</h2><hr>
 
-<form class="align-self-center" action="<?php echo FRONT_ROOT.'Login/init' ?>" method="post" style="min-width: 40%;">
-        
-        <div class="form-group">
-        	<div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <span class="fa fa-at"></span>
-                    </span>                    
-                </div>
-                <input type="email" class="form-control" name="email" placeholder="Correo Electr&oacute;nico" required="required">				
-            </div>
+<div id="" class="">
+
+<form action="<?php echo FRONT_ROOT.'Login/init' ?>" method="post">
+
+    <div class="uk-margin uk-flex uk-flex-center">
+        <div class="uk-inline uk-form-width-large">
+            <span class="uk-form-icon" uk-icon="icon: mail"></span>
+            <input class="uk-input uk-width-1-1" type="mail" name="email" placeholder="Correo Electr&oacute;nico" required>
         </div>
-		<div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">
-                        <i class="fa fa-lock"></i>
-                    </span>                    
-                </div>
-                <input type="password" class="form-control" name="password" placeholder="Contrase&ntilde;a" required="required">				
-            </div>
-        </div>        
-        <div class="form-group">
-            <button type="submit" class="btn btn-warning login-btn btn-block">Ingresar</button>
+    </div>
+
+    <div class="uk-margin uk-flex uk-flex-center">
+        <div class="uk-inline uk-form-width-large">
+            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+            <input class="uk-input uk-width-1-1" type="password" name="password" placeholder="Contrase&ntilde;a" required>
         </div>
-        
-	<hr>	
-       
-        <br>
-        <p class="text-center text-muted small">¿No tienes una cuenta? <a href="<?php echo FRONT_ROOT ?>Login/signinView">Reg&iacute;strate!</a></p>
-    </form>
+    </div>
+    <div class="uk-flex uk-flex-center">
+    <button class="uk-button uk-button-primary" type="submit">Ingresar</button>
+    </div>
+</form>
+
+    <p class="uk-margin uk-margin-medium-top uk-flex uk-flex-center">¿No tienes una cuenta? &#160;<a href="<?php echo FRONT_ROOT ?>Login/signinView">¡Reg&iacute;strate!</a></p>
     
-<br>
+</div>
 </div>

@@ -1,18 +1,33 @@
 <br>
-<h2>DATOS PERSONALES</h2>
-<br>
 
- <div class="card flex-row flex-wrap">
-        <div class="card-block px-2 col-7"><br>
-            <h3 class="card-title"><?php echo $user->getNombre() . ' ' . $user->getApellido() ?></h3>
-    <br>
-	    <p class="card-text"><b>DNI:</b>&#160; <?php echo $user->getDni() ?></p>
-        <p class="card-text"><b>Email:</b>&#160; <?php if($user->getEmail() != 'undefined'){ echo $user->getEmail(); } ?></p>
-        <p class="card-text"><b>Contrase&ntilde;a:</b>&#160; <?php $cant = strlen($user->getPassword()); for($i=0;$i<$cant;$i++){ echo '*'; } ?></p>
-        
-      <br><a href="<?php echo FRONT_ROOT ?>Ticket/ShowTicketList/<?php echo $_SESSION['id'] ?>" class="btn btn-warning"><i class="fa fa-ticket"></i>&#160;&#160;Mis Entradas</a>&#160; 
-      <a href="<?php echo FRONT_ROOT ?>User/ShowEditView/<?php echo $user->getId() ?>" class="btn btn-secondary"><i class="fa fa-user"></i>&#160;&#160;Editar Perfil</a><br><br>
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
+<h2>Datos Personales</h2>
+
+ <div class="">
+            <h3 class="uk-card-title"><?php echo $user->getNombre() . ' ' . $user->getApellido() ?></h3>
+
+            <table class="uk-table uk-table-divider">
+    <tbody>
+        <tr>
+            <td><b>DNI:</b></td>
+            <td><?php echo $user->getDni() ?></td>
+        </tr>
+        <tr>
+            <td><b>Email:</b></td>
+            <td><?php echo $user->getEmail() ?></td>
+        </tr>
+        <tr>
+            <td><b>Contrase&ntilde;a:</b></td>
+            <td><?php $cant = strlen($user->getPassword()); for($i=0;$i<$cant;$i++){ echo '*'; } ?></td>
+        </tr>
+</tbody>
+</table>
+   
+        <br>
+      <a class="uk-button uk-button-primary" href="#"><span class="uk-margin-small-right" uk-icon="cart"></span>Mis Pedidos</a>
+    <a class="uk-button uk-button-secondary" href="<?php echo FRONT_ROOT ?>Usuario/ShowEditView/<?php echo $_SESSION['id'] ?>"><span class="uk-margin-small-right" uk-icon="pencil"></span>Editar Perfil</a>
  </div>
- <br>
+ 
  </div>
+</div>
 

@@ -1,9 +1,11 @@
 <br>
-    <h2>REGISTRARSE</h2><br> 
 
-<div id="" class="row col-12 d-flex justify-content-center">
+<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
+    <h2 class="uk-modal-title uk-flex uk-flex-center">Registrarse</h2><hr>
 
-<form action="<?php echo FRONT_ROOT.'Login/signin' ?>" method="post">
+<div id="" class="">
+
+<form class="uk-grid-small" action="<?php echo FRONT_ROOT.'Login/signin' ?>" method="post" uk-grid>
 
         <!--nombre_usuario
             apellido_usuario
@@ -18,66 +20,61 @@
             piso_usuario 
             dept_usuario --> 
 
-<div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="nombre">Nombre</label>
-      <!-- El atributo pattern indica que solo se aceptan letras y espacios -->
-      <input type="text" class="form-control" name="nombre" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
+    <div class="uk-width-1-3">
+    <label class="uk-form-label" for="form-stacked-text">Nombre/s</label>
+        <input class="uk-input" type="text" placeholder="" name="nombre" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
-    <div class="form-group col-md-4">
-      <label for="apellido">Apellido</label>
-      <input type="text" class="form-control" name="apellido" placeholder="" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
+    <div class="uk-width-1-3">
+    <label class="uk-form-label" for="form-stacked-text">Apellido/s</label>
+        <input class="uk-input" type="text" placeholder="" name="apellido" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
-    <div class="form-group col-md-4">
-      <label for="dni">DNI</label>
-      <input type="number" class="form-control" name="dni" placeholder="" min="0" required>
+    <div class="uk-width-1-3">
+    <label class="uk-form-label" for="form-stacked-text">DNI</label>
+        <input class="uk-input" type="number" placeholder="" name="dni" min="0" required>
     </div>
-  </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="domicilio">Domicilio</label>
-      <input type="Text" class="form-control" name="domicilio" placeholder="" min="0" required>
+    <div class="uk-width-2-5">
+    <label class="uk-form-label" for="form-stacked-text">Domicilio</label>
+        <input class="uk-input" type="text" placeholder="" name="domicilio" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
-    <div class="form-group col-md-2 ">
-      <label for="altura">Nro</label>
-      <input type="number" class="form-control" name="altura" placeholder="" min="0" required>
+    <div class="uk-width-1-5">
+    <label class="uk-form-label" for="form-stacked-text">N&uacute;mero</label>
+        <input class="uk-input" type="number" placeholder="" name="altura" min="0" required>
     </div>
-    <div class="form-group col-md-1">
-      <label for="piso">Piso</label>
-      <input type="number" class="form-control" name="piso" placeholder="" min="0">
+    <div class="uk-width-1-5">
+    <label class="uk-form-label" for="form-stacked-text">Piso</label>
+        <input class="uk-input" type="number" placeholder="" name="piso" min="0" required>
     </div>
-    <div class="form-group col-md-1">
-      <label for="dto">Dto</label>
-      <input type="number" class="form-control" name="dto" placeholder="" min="0">
-    </div>
-    <div class="form-group col-md-4">
-      <label for="telefono">Telefono</label>
-      <input type="number" class="form-control" name="telefono" placeholder="" min="0" required>
-    </div>
-  </div>
-  
-  
-  <div class="form-row">
-  <div class="form-group col-md-4">
-      <label for="razonSocial">Razon Social</label>
-      <input type="text" class="form-control" name="razonSocial" placeholder="" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" name="email" placeholder="" required>
-    </div>
-    <div class="form-group col-md-4">
-      <label for="password">Contrase&ntilde;a</label>
-      <input type="password" class="form-control" name="password" placeholder="" required>
+    <div class="uk-width-1-5">
+    <label class="uk-form-label" for="form-stacked-text">Depto</label>
+        <input class="uk-input" type="text" placeholder="" name="dto" pattern="[A-Za-z\s]+" title="Únicamente letras" required>
     </div>
     
+    <div class="uk-width-1-2">
+    <label class="uk-form-label" for="form-stacked-text">Tel&eacute;fono</label>
+        <input class="uk-input" type="number" placeholder="" name="telefono" min="0" required>
+    </div>
+    <div class="uk-width-1-2">
+    <label class="uk-form-label" for="form-stacked-text">Raz&oacute;n Social</label>
+        <input class="uk-input" type="text" placeholder="" name="razonSocial" required>
+    </div>
+    
+    <div class="uk-width-1-2">
+    <label class="uk-form-label" for="form-stacked-text">Correo Electr&oacute;nico</label>
+        <input class="uk-input" type="email" placeholder="" name="email" required>
+    </div>
+    <div class="uk-width-1-2">
+    <label class="uk-form-label" for="form-stacked-text">Contrase&ntilde;a</label>
+        <input class="uk-input" type="password" placeholder="" name="password" required>
+    </div>
+ 
   </div>
-  <br>
-  <div class="form-group col-md-12 d-flex justify-content-center">
-  <button type="submit" class="btn btn-warning col-md-4">Crear Cuenta</button>
+  <br><br>
+  <div class="uk-flex uk-flex-center">
+    <button class="uk-button uk-button-primary" type="submit">Crear Cuenta</button>
   </div>
-  <br>
+ <br>
 </form>
-<br><br>
+
+</div>
 </div>

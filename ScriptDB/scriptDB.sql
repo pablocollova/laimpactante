@@ -10,7 +10,7 @@ CREATE TABLE usuarios (
     razonSocial_usuario varchar(30),
     dni_usuario int,
     isAdmin int,
-    email varchar(20),
+    email varchar(30),
     pass_usuario varchar(10),
     telefono_usuario varchar(15),
     domicilio_usuario varchar(20),
