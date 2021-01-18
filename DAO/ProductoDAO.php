@@ -203,6 +203,8 @@
         {
             echo "productos destacados";
         }
+
+        
         public function Edit(Producto $productoActualizado){
             
             $categoriaDAO = new CategoriaDAO();

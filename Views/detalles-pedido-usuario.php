@@ -22,7 +22,7 @@
               <tr>
                 <td> <a href="<?= FRONT_ROOT ?>Producto/ShowInfo/ <?= $detalle->getProducto()->getId() ?>"> <?= $detalle->getProducto()->getNombre(); ?> </a> </td>
                 <td> <?= $detalle->getCantidad(); ?> </td>
-                <td> <?= $detalle->getDescuento(); ?> </td>
+                <td> <?= $detalle->getDescuento() ?: "-"; ?> </td>
                 <td>$ <?= $detalle->getImporte(); ?> </td>
                 
               </tr>
