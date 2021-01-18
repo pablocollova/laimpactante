@@ -32,8 +32,8 @@ class UsuarioController {
                 require_once(VIEWS_PATH. 'nav-user.php');
             }
 
-            $usuario = $this->usersDAO->GetOne($id);
-            require_once(VIEWS_PATH. 'perfil-usuario.php');
+            $user = $this->usersDAO->GetOne($id);
+            require_once(VIEWS_PATH. 'perfil-user.php');
 
         }
         require_once(VIEWS_PATH. 'footer.php');

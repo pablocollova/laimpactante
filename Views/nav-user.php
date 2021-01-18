@@ -30,7 +30,7 @@
                 <div class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                         <li><a href="<?php echo FRONT_ROOT ?>Pedido/ShowPedidoEnProcesoView">Ver Pedido Actual</a></li>
-                        <li><a href="<?php echo FRONT_ROOT ?>Pedido/ShowListaUsuarioView">Ver Lista de Pedidos</a></li>
+                        <li><a href="<?php echo FRONT_ROOT ?>Pedido/ShowListaUsuarioView/<?= $_SESSION['id'] ?>">Ver Lista de Pedidos</a></li>
 
                     </ul>
                 </div>

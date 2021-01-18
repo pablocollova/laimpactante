@@ -125,7 +125,7 @@
         }
 
 
-        public function GetProductosEnVenta(){
+        public function getProductosEnVenta(){
             
             try{
                 $productoList = array();
@@ -216,7 +216,7 @@
             $parameters["cantidad"] = $productoActualizado->getStock();
             $parameters["precio"] = $productoActualizado->getPrecioUnitario();
             $parameters["categoria"] = $categoriaDAO->GetPorNombre($productoActualizado->getCategoria())->getId();
-            $parameters["para_venta"] = $productoActualizado->getCategoria();
+            $parameters["para_venta"] = $productoActualizado->getParaVenta();
             $parameters["minimo_unidades"] = $productoActualizado->getMinUnidades();
             $parameters["id"] = $productoActualizado->getId();
 

@@ -24,7 +24,8 @@
 </table>
    
         <br>
-      <a class="uk-button uk-button-primary" href="#"><span class="uk-margin-small-right" uk-icon="cart"></span>Mis Pedidos</a>
+      <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowListaUsuarioView/ <?= $user->getId() ?>"><span class="uk-margin-small-right" uk-icon="cart"></span>Mis Pedidos</a>
+      <a class="uk-button uk-button-primary" href="#"><span class="uk-margin-small-right"></span>Cuenta Corriente</a>
     <a class="uk-button uk-button-secondary" href="<?php echo FRONT_ROOT ?>Usuario/ShowEditView/<?php echo $_SESSION['id'] ?>"><span class="uk-margin-small-right" uk-icon="pencil"></span>Editar Perfil</a>
  </div>
  

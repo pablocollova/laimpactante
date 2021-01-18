@@ -11,8 +11,11 @@
           <option value="" disabled selected>Seleccione un estado</option>
           <?php 
             foreach ($estados as $estado){
-              echo "<option value=". $estado["id_estadopedido"]. ">". $estado["descripcion"]." </option>";
+              if($estado["descripcion"] != "Actual"){ ?>
+                <option value= "<?= $estado["descripcion"]?>" > <?= $estado["descripcion"]?> </option>;
+              <?php }
             }
+            echo "<option value= \"todos\" > Todos </option>";
           ?>
         </select>
         <button class="uk-button uk-button-default">Filtrar</button>
@@ -45,7 +48,7 @@
                     $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedido->getId());
         ?>
                     <tr class="filahover">
-                    <td> <?= $pedido->getFecha(); ?> </td>
+                    <td> <?= date("d/m/Y", strtotime($pedido->getFecha())); ?> </td>
                     <td> <?= $cliente->getNombre() . " " . $cliente->getApellido(); ?> </td>
                     <td> <?= $pedido->getImporte(); ?> </td>
                     <td> <?= $pedido->getDescuento(); ?> </td>

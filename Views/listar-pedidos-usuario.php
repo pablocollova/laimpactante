@@ -1,7 +1,7 @@
 <br>
 
 <div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right ">
-  <h2>Listado de pedidos</h2>
+  <h2>Listado de pedidos: <?= $cliente->getNombre() . " " . $cliente->getApellido()?></h2>
 
 <br>
 <div> 
@@ -26,13 +26,13 @@
                 
         ?>
                 <tr class="filahover">
-                  <td> <?= $pedido->getFecha(); ?> </td>
+                  <td> <?= date("d/m/Y", strtotime($pedido->getFecha())); ?> </td>
                   <td> <?= $pedido->getImporte(); ?> </td>
                   <td> <?= $pedido->getDescuento(); ?> </td>
                   <td> <?= $pedido->getNroRemito(); ?> </td>
                   <td> <?= $pedido->getEstado(); ?> </td>
                   <td>
-                    <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowDetallesView/ <?= $pedido->getId() ?>">Ver detalles</a>
+                    <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowDetallesUsuarioView/ <?= $pedido->getId() ?>">Ver detalles</a>
                   </td>
                 </tr>
               

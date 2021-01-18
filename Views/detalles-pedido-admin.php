@@ -19,7 +19,7 @@
         <label class="uk-form-label uk-width-1-1 detalleComprador"><b>Cliente:</b></label>
         <div class="uk-form-controls uk-width-1-1">
         <div class="uk-inline">
-        <label class="uk-form-label uk-width-1-1 detalleComprador"><a href="#"> <?= $cliente->getNombre() . " " . $cliente->getApellido()?> </a></label>
+        <label class="uk-form-label uk-width-1-1 detalleComprador"><a href="<?=FRONT_ROOT?>Usuario/perfil/<?= $cliente->getId()?>"> <?= $cliente->getNombre() . " " . $cliente->getApellido()?> </a></label>
             </div>
         </div>
     </div>
@@ -40,9 +40,50 @@
         <label class="uk-form-label uk-width-1-1 detalleComprador"><?= $cliente->getRazonSocial() ?></label>
             </div>
         </div>
+
+
     </div>
   </div>
   </form>
+
+  <!-- ////////////////////////////////////////////////////////// -->
+
+        <?php
+      if (!empty($pedido->getNroRemito())){ ?>
+
+        <h5><b>Nro. Remito:</b> <?= $pedido->getNroRemito()?>
+        <a href="<?= FRONT_ROOT ?>Pedido/editarNroRemito/<?= $pedido->getId() ?>" class="btn btn-warning">Editar</a>
+        </h5>
+        
+      <?php }else{ ?>
+        
+        <form method= "post" action = "<?=FRONT_ROOT?>Pedido/agregarNroRemito">
+
+          <input type="hidden" name="id" value=<?= $pedido->getId() ?> >   
+
+          <div>
+            <label><b>Agregar Nro. Remito:</b></label>
+            <input type="number" name="factura" value="" min="0" required>
+            <button type="submit" class="btn btn-warning"> Aceptar </button>
+          </div>
+
+        
+        </form>
+
+      <?php } ?>
+
+    <?php
+      if ($pedido->getEstado() == "Aceptado"){ 
+        $venta = $this->ventaDAO->GetOne($pedido->getId());
+    ?>
+        <h5><b>Fecha de venta:</b> <?= date("d/m/Y", strtotime($venta->getFecha()))?> </h5>
+        <h5><b>Nro. Factura:</b> <?= $venta->getNroFactura()?> </h5>
+    <?php } ?>
+
+  <!-- ////////////////////////////////////////////////////////// -->
+
+
+
 <br>
 <br>
 
@@ -85,11 +126,16 @@
 
   </table>
   <br>
-  <div class="uk-flex uk-flex-center">
-  <a class="uk-button uk-button-primary" href="#">Aceptar</a>
-  &#160;&#160;&#160;
-    <a class="uk-button uk-button-secondary" href="#">Rechazar</a>
-</div>
+  <?php 
+  if ($pedido->getEstado() == "En espera"){?>
+   
+    <div class="uk-flex uk-flex-center">
+      <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowConfirmarAceptarPedidoView/<?= $pedido->getId() ?>">Aceptar</a>
+      &#160;&#160;&#160;
+      <a class="uk-button uk-button-secondary" href="<?= FRONT_ROOT ?>Pedido/ShowConfirmarRechazarPedidoView/<?= $pedido->getId() ?>">Rechazar</a>
+    </div>
+
+  <?php } ?>
 </div>
 </div>
 
