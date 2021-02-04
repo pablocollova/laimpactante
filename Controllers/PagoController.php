@@ -4,25 +4,41 @@
 
     use \Exception as Exception;
     use DAO\PagoDAO as PagoDAO;
+    use DAO\UsuarioDAO as UsuarioDAO;
     use Models\Pago as Pago;
+    use Models\Usuario as Usuario;
 
     class PagoController{
-
         private $PagoDAO;
 
+        private $usuariosDAO;
+
         public function __construct(){
-
             $this->pagoDAO = new PagoDAO();
-        }
 
+            $this->usuariosDAO = new UsuarioDAO();
+        }
 
         public function ShowAddView(){
             
             if ($_SESSION['esAdmin'] == true){
+
+                $usuarios = $this->usuariosDAO->GetAll();
+
+                $usuariosString = '[';
+
+               foreach($usuarios as $usuario){
+                    $usuariosString = $usuariosString . '{"nombre":"' .$usuario->getNombre(). '","id":"' .$usuario->getId(). '"},';
+               }
+
+               $usuariosString = substr($usuariosString, 0, -1);
+
+               $usuariosString = $usuariosString . ']';
                 
                 require_once(VIEWS_PATH. 'header.php');
                 require_once(VIEWS_PATH. 'nav-admin.php');
                 require_once(VIEWS_PATH. 'agregar-pago.php');
+
             }else{
                 require_once(VIEWS_PATH. 'header-login.php');
                 require_once(VIEWS_PATH. 'nav-principal.php');
@@ -103,6 +119,15 @@
             $this->pagoDAO->Remove($id);
             $this->ShowListView();
         }     
+    
+
+    public function AgregarPago($id_user){
+
+        echo $id_user;
     }
+
+   
+
+}
 
 ?>
