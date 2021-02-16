@@ -39,8 +39,8 @@
  
       <div class="uk-margin-small">
         <label class="uk-form-label">Categor&iacute;a</label>
-        <select class="uk-select" name="categoria" required>
-          <option value="" disabled selected>Seleccione una categoría</option>
+        <select multiple class="uk-select" name="categoria[]" required>
+          <option value="disabled" disabled selected>Seleccione una categoría</option>
           <?php
             foreach ($categorias as $categoria){
               echo "<option value=". $categoria->getNombre(). ">". $categoria->getNombre()." </option>";
@@ -63,7 +63,7 @@
         <label class="uk-form-label">Subir Im&aacute;genes</label>
         <div class="uk-margin">
         <div uk-form-custom>
-            <input type="file" accept="image/jpg, image/png, image/jpeg" multiple>
+            <input type="file" name="imagenes[]" accept="image/jpg, image/png, image/jpeg" multiple>
             <button class="uk-button uk-button-default" type="button" tabindex="-1">Seleccionar</button>
         </div>
     </div>

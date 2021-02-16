@@ -15,7 +15,7 @@
         public function Add(Producto $producto){
 
             try{
-                $query = "INSERT INTO ".$this->tableName." (codigo_producto, nombre_producto, descripcion_producto, cantidad_producto, precio_producto, categoria_producto, para_venta, minimo_unidades) VALUES (:codigo, :nombre, :descripcion, :cantidad, :precio, :categoria, :para_venta, :minimo_unidades);";
+                $query = "INSERT INTO ".$this->tableName." (codigo_producto, nombre_producto, descripcion_producto, cantidad_producto, precio_producto, para_venta, minimo_unidades) VALUES (:codigo, :nombre, :descripcion, :cantidad, :precio, :para_venta, :minimo_unidades);";
                 $categoriaDAO = new CategoriaDAO();
 
                 $parameters["codigo"] = $producto->getCodigo();
@@ -23,12 +23,13 @@
                 $parameters["descripcion"] = $producto->getDescripcion();
                 $parameters["cantidad"] = $producto->getStock();
                 $parameters["precio"] = $producto->getPrecioUnitario();
-                $parameters["categoria"] = $categoriaDAO->GetPorNombre($producto->getCategoria())->getId();
                 $parameters["para_venta"] = $producto->getParaVenta();
                 $parameters["minimo_unidades"] = $producto->getMinUnidades();
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $categoriaDAO->addCategoriasProducto($this->lastId(), $producto->getCategorias());
             
             }catch(Exception $ex){
                 throw $ex;
@@ -36,7 +37,7 @@
         }
 
 
-        public function arrayImagenes($nombreProducto){
+        public function arrayImagenes($nombreProducto){     //Genera un array con el path de las imagenes de un producto
 
             $imagenes = array();
             $flag = true;
@@ -68,6 +69,7 @@
         public function GetAll(){
             
             try{
+                $categoriaDAO = new CategoriaDAO();
                 $productoList = array();
 
                 $query = "SELECT * FROM ".$this->tableName;
@@ -85,7 +87,7 @@
                     $producto->setStock($row["cantidad_producto"]);
                     $producto->setPrecioUnitario($row["precio_producto"]);
                     $producto->setMinUnidades($row["minimo_unidades"]);
-                    $producto->setCategoria($row["categoria_producto"]);
+                    $producto->setCategorias($categoriaDAO->GetCategoriasProducto($producto->getId()));
                     $producto->setParaVenta($row["para_venta"]);
                     $producto->setImagenes($this->arrayImagenes($producto->getNombre()));
 
@@ -128,6 +130,7 @@
         public function getProductosEnVenta(){
             
             try{
+                $categoriaDAO = new CategoriaDAO();
                 $productoList = array();
 
                 $query = "SELECT * FROM ".$this->tableName. " WHERE para_venta = 1";
@@ -145,7 +148,7 @@
                     $producto->setStock($row["cantidad_producto"]);
                     $producto->setPrecioUnitario($row["precio_producto"]);
                     $producto->setMinUnidades($row["minimo_unidades"]);
-                    $producto->setCategoria($row["categoria_producto"]);
+                    $producto->setCategorias($categoriaDAO->GetCategoriasProducto($producto->getId()));
                     $producto->setParaVenta($row["para_venta"]);
 
                     array_push($productoList, $producto);
@@ -174,7 +177,9 @@
 
 
         public function Remove($id){
-        
+
+            $categoriaDAO = new CategoriaDAO();
+            $categoriaDAO->removeCategoriasProducto($id);
             $query = "DELETE FROM " . $this->tableName . " WHERE id_producto = :id";
             $parameters["id"] = $id;
             $producto = $this->GetOne($id);
@@ -208,17 +213,17 @@
         public function Edit(Producto $productoActualizado){
             
             $categoriaDAO = new CategoriaDAO();
-            $query = "UPDATE " . $this->tableName . " SET codigo_producto = :codigo, nombre_producto = :nombre, descripcion_producto = :descripcion, cantidad_producto = :cantidad, precio_producto = :precio, categoria_producto = :categoria, para_venta = :para_venta, minimo_unidades = :minimo_unidades WHERE id_producto = :id";
+            $query = "UPDATE " . $this->tableName . " SET codigo_producto = :codigo, nombre_producto = :nombre, descripcion_producto = :descripcion, cantidad_producto = :cantidad, precio_producto = :precio, para_venta = :para_venta, minimo_unidades = :minimo_unidades WHERE id_producto = :id";
             
             $parameters["codigo"] = $productoActualizado->getCodigo();
             $parameters["nombre"] = $productoActualizado->getNombre();
             $parameters["descripcion"] = $productoActualizado->getDescripcion();
             $parameters["cantidad"] = $productoActualizado->getStock();
             $parameters["precio"] = $productoActualizado->getPrecioUnitario();
-            $parameters["categoria"] = $categoriaDAO->GetPorNombre($productoActualizado->getCategoria())->getId();
             $parameters["para_venta"] = $productoActualizado->getParaVenta();
             $parameters["minimo_unidades"] = $productoActualizado->getMinUnidades();
             $parameters["id"] = $productoActualizado->getId();
+            $categoriaDAO->updateCategoriasProducto($productoActualizado->getId(), $productoActualizado->getCategorias());
 
             try{
                 $this->connection = Connection::GetInstance();
@@ -236,12 +241,12 @@
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
                 
-                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], $p["categoria_producto"], $p["para_venta"]);
+                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], $p["para_venta"]);
             }, $value);
             
             $categoriaDAO = new CategoriaDAO();
             foreach($resp as $producto){
-                $producto->setCategoria($categoriaDAO->GetOne($producto->getCategoria())->getNombre());
+                $producto->setCategorias($categoriaDAO->getCategoriasProducto($producto->getId()));
                 $producto->setImagenes($this->arrayImagenes($producto->getNombre()));
             }
             return count($resp) > 1 ? $resp : $resp["0"];

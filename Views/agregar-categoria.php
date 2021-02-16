@@ -14,7 +14,7 @@
 
       <div class="uk-margin-small">
         <label class="uk-form-label">Porcentaje de Descuento</label>
-        <input class="uk-input" type="number" name="descuento" value="" min="0" max="100" required>
+        <input class="uk-input" type="number" name="descuento" value="0" min="0" max="100" required>
       </div>  
 
   </div>

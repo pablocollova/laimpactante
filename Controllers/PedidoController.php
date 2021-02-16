@@ -169,7 +169,8 @@
                 require_once(VIEWS_PATH. 'header.php');
 
                 $pedidos = $this->pedidoDAO->GetPedidosPorUsuario($id);
-                $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedidos[0]->getId());
+
+                $cliente = $this->usuarioDAO->GetOne($id);
 
                 if($_SESSION['esAdmin'] == true){
                     require_once(VIEWS_PATH. 'nav-admin.php');

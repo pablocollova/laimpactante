@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <td><b>Categoría:</b></td>
-            <td><?= $producto->getCategoria() ?></td>
+            <td><?php foreach($producto->getCategorias() as $categoria) { echo $categoria . " "; }?></td>
         </tr>
         <tr>
             <td><b>Para venta:</b></td>

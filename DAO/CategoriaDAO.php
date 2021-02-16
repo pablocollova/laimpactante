@@ -49,10 +49,10 @@
         }
 
 
-        public function GetPorNombre($id){
+        public function GetIDPorNombre($nombre){      //Devuelve el id de la categoría pasada por parámetro
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE nombre_categoria = :nombre";
-            $parameters["nombre"] = $id;
+            $query = "SELECT id_categoria FROM " . $this->tableName . " WHERE nombre_categoria = :nombre";
+            $parameters["nombre"] = $nombre;
 
             try{
                 $this->connection = Connection::GetInstance();
@@ -63,12 +63,11 @@
             }
 
             if (!empty($resultSet)){
-                return $this->mapear($resultSet);
+                return $resultSet[0]["id_categoria"];
             }else{
                 return false;
             }
         }
-
 
         public function GetAll(){
             
@@ -123,6 +122,73 @@
             try{
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+            } catch (Exception $ex){ 
+                throw $ex;
+            }
+        }
+
+        public function addCategoriasProducto($idProducto, $categorias){         //Agrega a la tabla de categoriaxproducto
+            
+            try{
+
+                $query = "INSERT INTO categoriaxproducto (id_producto, id_categoria) VALUES (:idProducto, :idCategoria);";
+                $parameters["idProducto"] = $idProducto;
+                
+                foreach($categorias as $categoria){
+                    
+                    $parameters["idCategoria"] = $this->GetIDPorNombre($categoria);
+    
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                }
+            
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+        public function getCategoriasProducto($idProducto){
+            
+            $categorias = array();
+            try{
+
+                $query = "SELECT nombre_categoria FROM categoriaxproducto cxp INNER JOIN categorias c ON cxp.id_categoria = c.id_categoria WHERE id_producto = ". $idProducto;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+            
+                foreach ($resultSet as $row){
+                    array_push($categorias, $row["nombre_categoria"]);
+                }
+
+                return $categorias;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+
+        public function updateCategoriasProducto($idProducto, $categorias){
+            
+            try{
+                $this->removeCategoriasProducto($idProducto);
+                $this->addCategoriasProducto($idProducto, $categorias);
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+
+        public function removeCategoriasProducto($idProducto){
+            
+            $query = "DELETE FROM categoriaxproducto WHERE id_producto = ". $idProducto;
+
+            try{
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query);
 
             } catch (Exception $ex){ 
                 throw $ex;
