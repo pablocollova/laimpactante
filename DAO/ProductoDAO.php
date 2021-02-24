@@ -100,9 +100,42 @@
             }
         }
 
-        public function getProductosPorCategoria($idCategoria)
-        {
+        public function getProductosPorCategoria($idCategoria, $paraVenta = null){     //Si paraVenta es true trae solo los del catálogo, sino trae todos los productos
             
+            try{
+                $categoriaDAO = new CategoriaDAO();
+                $productoList = array();
+                
+                if ($paraVenta == true){
+                    $query = "SELECT * FROM categoriaxproducto cxp INNER JOIN productos p ON cxp.id_producto = p.id_producto WHERE para_venta = 1 AND id_categoria = ". $idCategoria;
+                }else{
+                    $query = "SELECT * FROM categoriaxproducto cxp INNER JOIN productos p ON cxp.id_producto = p.id_producto WHERE id_categoria = ". $idCategoria;
+                }
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row){        
+
+                    $producto = new Producto();
+                    $producto->setId($row["id_producto"]);
+                    $producto->setCodigo($row["codigo_producto"]);
+                    $producto->setNombre($row["nombre_producto"]);
+                    $producto->setDescripcion($row["descripcion_producto"]);
+                    $producto->setStock($row["cantidad_producto"]);
+                    $producto->setPrecioUnitario($row["precio_producto"]);
+                    $producto->setMinUnidades($row["minimo_unidades"]);
+                    $producto->setCategorias($categoriaDAO->GetCategoriasProducto($producto->getId()));
+                    $producto->setParaVenta($row["para_venta"]);
+                    $producto->setImagenes($this->arrayImagenes($producto->getNombre()));
+
+                    array_push($productoList, $producto);
+                }
+                return $productoList;
+
+            }catch(Exception $ex){
+                throw $ex;
+            }
         }
 
         
@@ -241,7 +274,7 @@
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
                 
-                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], $p["para_venta"]);
+                return new Producto($p["id_producto"], $p["codigo_producto"], $p["nombre_producto"], $p["descripcion_producto"], $p["cantidad_producto"], $p["precio_producto"], $p["minimo_unidades"], null, $p["para_venta"]);
             }, $value);
             
             $categoriaDAO = new CategoriaDAO();

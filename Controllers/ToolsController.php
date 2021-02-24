@@ -4,7 +4,7 @@
     class ToolsController{
 
         
-        public static function ShowErrorView($mensaje, $exMessage, $pathRedirect){ //Parametros: Mensaje para el usuario, mensaje de la excepción, string con Controller/ShowXView
+        public static function ShowErrorView($mensaje, $pathRedirect){ //Parametros: Mensaje para el usuario, string con Controller/ShowXView
             
             require_once(ROOT . '/Views/header.php');
 

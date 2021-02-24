@@ -78,7 +78,7 @@
         <div>
             <div class="uk-margin" uk-margin>
         <div uk-form-custom="target: true">
-            <input class="uk-input uk-form-width-medium" type="number" placeholder="Cantidad de Unidades" name="cantidad" min=<?= $producto->getMinUnidades()?> max="<?= $producto->getStock()?>" required>
+            <input class="uk-input uk-form-width-medium" type="number" placeholder="Cantidad de Unidades" name="cantidad" min="<?= $producto->getMinUnidades()?>" max="<?=$producto->getStock()?>" required>
         </div>
         <button type="submit" class="uk-button uk-button-secondary">Agregar</button>
     </div>

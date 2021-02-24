@@ -42,10 +42,10 @@
 
       <tbody>
         <?php
-            foreach ($pedidos as $pedido){ 
-                if($pedido->getEstado() != $this->estadoPedidoDAO->getIdPorEstado("Actual")){
-                    
-                    $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedido->getId());
+              foreach ($pedidos as $pedido){ 
+                  if($pedido->getEstado() != $this->estadoPedidoDAO->getIdPorEstado("Actual")){
+                      
+                      $cliente = $this->usuarioDAO->getUsuarioPorPedido($pedido->getId());
         ?>
                     <tr class="filahover">
                     <td> <?= date("d/m/Y", strtotime($pedido->getFecha())); ?> </td>
@@ -59,7 +59,7 @@
                     </td>
                     </tr>
               
-        <?php } } ?>
+        <?php } }?>
       </tbody>
 
     </table>

@@ -35,57 +35,84 @@
 
         public function AddDetallePedido($idProducto, $cantidad){
 
-            $pedidoEnProceso = $this->pedidoDAO->GetPedidosUsuarioPorEstado($this->estadoPedidoDAO->getIdPorEstado('Actual'), $_SESSION["id"]);  //Traigo el pedido que está armando el usuario y que todavía no fue enviado al admin
-            
-            if ($pedidoEnProceso == false){  //Si no hay pedido en proceso entonces se crea uno   
-               
-                $pedidoEnProceso = new Pedido();
-                $pedidoEnProceso->setEstado('Actual');
-                $this->pedidoDAO->Add($pedidoEnProceso, $_SESSION['id']);
-                $idPedido = $this->pedidoDAO->lastId();
-            }else{
-                $idPedido = $pedidoEnProceso->getId();
+            try{
+                $pedidoEnProceso = $this->pedidoDAO->GetPedidosUsuarioPorEstado($this->estadoPedidoDAO->getIdPorEstado('Actual'), $_SESSION["id"]);  //Traigo el pedido que está armando el usuario y que todavía no fue enviado al admin
+                $agregado = false;      //Controla si se agrega
+    
+                if ($pedidoEnProceso == false){  //Si no hay pedido en proceso entonces se crea uno   
+                   
+                    $pedidoEnProceso = new Pedido();
+                    $pedidoEnProceso->setEstado('Actual');
+                    $this->pedidoDAO->Add($pedidoEnProceso, $_SESSION['id']);
+                    $idPedido = $this->pedidoDAO->lastId();
+    
+                }else{                          //Si ya hay pedido en proceso entonces se busca si existe un detalle que corresponde al producto a agregar
+                    $idPedido = $pedidoEnProceso->getId();
+    
+                    foreach($pedidoEnProceso->getListaDetalles() as $detalle){
+    
+                        if($detalle->getProducto()->getId() == $idProducto){        //Si lo hay, se suman las cantidades y agregado es true
+                            $this->detallePedidoDAO->Edit($detalle->getId(), $cantidad);
+                            $agregado = true;
+                        }
+                    }
+                }
+                
+                if (!$agregado){       //Si no está agregado significa que no hay un detalle de ese producto, por lo que se agrega
+                    $producto = $this->productoDAO->GetOne($idProducto);
+                    $detalle = new DetallePedido('', $producto, $cantidad, '', $producto->getPrecioUnitario() * $cantidad);
+                    $this->detallePedidoDAO->Add($detalle, $idPedido);
+                }
+                $this->ShowPedidoEnProcesoView();
+
+            }catch (Exception $e){
+
+                ToolsController::ShowErrorView("No se pudo agregar el producto al pedido.", "Producto/ShowCatalogo/");
             }
-            
-            $producto = $this->productoDAO->GetOne($idProducto);
-            $detalle = new DetallePedido('', $producto, $cantidad, '', $producto->getPrecioUnitario() * $cantidad);
-            $this->detallePedidoDAO->Add($detalle, $idPedido);
-            $this->ShowPedidoEnProcesoView();
         }
 
 
         public function RemoveDetallePedido($id){       //Borrar un detalle de un pedido que no fue enviado al admin
 
-            $this->detallePedidoDAO->Remove($id);
+            try{
+                $this->detallePedidoDAO->Remove($id);
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo eliminar el detalle del producto.", "Producto/ShowCatalogo/");
+            }
             $this->ShowPedidoEnProcesoView();
         }
 
 
         public function ShowPedidoEnProcesoView(){
 
-            if ($_SESSION['log'] == false){
-                
-                require_once(VIEWS_PATH. 'header-login.php');
-                require_once(VIEWS_PATH. 'nav-principal.php');
-                require_once(VIEWS_PATH. 'login.php');
-            }else{
-
-                require_once(VIEWS_PATH. 'header.php');
-
-                $pedidoEnProceso = $this->pedidoDAO->GetPedidosUsuarioPorEstado($this->estadoPedidoDAO->getIdPorEstado('Actual'), $_SESSION["id"]);
-                $detallesLista = array();
-                if ($pedidoEnProceso != false){
-                    $detallesLista = $pedidoEnProceso->getListaDetalles();
-                }
-                
-                if($_SESSION['esAdmin'] == true){
-                    require_once(VIEWS_PATH. 'nav-admin.php');
+            try{
+                if ($_SESSION['log'] == false){
+                    
+                    require_once(VIEWS_PATH. 'header-login.php');
+                    require_once(VIEWS_PATH. 'nav-principal.php');
+                    require_once(VIEWS_PATH. 'login.php');
                 }else{
-                    require_once(VIEWS_PATH. 'nav-user.php');
+    
+                    require_once(VIEWS_PATH. 'header.php');
+    
+                    $pedidoEnProceso = $this->pedidoDAO->GetPedidosUsuarioPorEstado($this->estadoPedidoDAO->getIdPorEstado('Actual'), $_SESSION["id"]);
+                    $detallesLista = array();
+                    if ($pedidoEnProceso != false){
+                        $detallesLista = $pedidoEnProceso->getListaDetalles();
+                    }
+                    
+                    if($_SESSION['esAdmin'] == true){
+                        require_once(VIEWS_PATH. 'nav-admin.php');
+                    }else{
+                        require_once(VIEWS_PATH. 'nav-user.php');
+                    }
+                    require_once(VIEWS_PATH. 'pedido-en-proceso.php');
                 }
-                require_once(VIEWS_PATH. 'pedido-en-proceso.php');
+                require_once(VIEWS_PATH. 'footer.php');
+
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo cargar el pedido en proceso.", "Producto/ShowCatalogo/");
             }
-            require_once(VIEWS_PATH. 'footer.php');
         }
 
 
@@ -113,27 +140,33 @@
 
         public function enviarPedido($id){
 
-            $pedido = $this->pedidoDAO->GetOne($id);
-
-            foreach($pedido->getListaDetalles() as $detalle){
-
-                $producto = $detalle->getProducto();
-                $nuevoStock = $producto->getStock() - $detalle->getCantidad();
-                $this->productoDAO->Edit($producto);
-                
-                if ($nuevoStock > 0){
-                    $producto->setStock($nuevoStock);
-                }else{
-                    throw new Exception("No hay stock suficiente del producto ". $producto->getNombre());
+            try{
+                $pedido = $this->pedidoDAO->GetOne($id);
+    
+                foreach($pedido->getListaDetalles() as $detalle){
+    
+                    $producto = $detalle->getProducto();
+                    $nuevoStock = $producto->getStock() - $detalle->getCantidad();
+                    
+                    if ($nuevoStock > 0){
+                        $producto->setStock($nuevoStock);
+                        var_dump($producto);
+                        $this->productoDAO->Edit($producto);
+                    }else{
+                        throw new Exception("No hay stock suficiente del producto ". $producto->getNombre());
+                    }
                 }
-            }
+    
+                $pedido->setEstado("En espera");
+                $pedido->setFecha(date("Y-m-d"));
+                $pedido->setImporte($this->calcularImporte($pedido->getListaDetalles()));
+                $pedido->setDescuento($this->calcularDescuento($pedido->getListaDetalles()));
+                $this->pedidoDAO->Edit($pedido);
+                $this->ShowListaUsuarioView($_SESSION['id']);
 
-            $pedido->setEstado("En espera");
-            $pedido->setFecha(date("Y-m-d"));
-            $pedido->setImporte($this->calcularImporte($pedido->getListaDetalles()));
-            $pedido->setDescuento($this->calcularDescuento($pedido->getListaDetalles()));
-            $this->pedidoDAO->Edit($pedido);
-            $this->ShowListaUsuarioView($_SESSION['id']);
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No pudo enviarse el pedido.", "Producto/ShowCatalogo/");
+            }
         }
 
 
@@ -216,11 +249,12 @@
 
                 $estados = $this->estadoPedidoDAO->GetAll();
                 $result = $this->filtrarPedidos($estado);
+                $pedidos = array();
 
                 if(is_array($result)){
 
                     $pedidos = $result;
-                }else{
+                }elseif($result != false){
                     $pedidos[0] = $result;
                 }
 
@@ -293,75 +327,104 @@
 
         public function aceptarPedido($id, $nroFactura){
 
-            $pedido = $this->pedidoDAO->GetOne($id);
-            $pedido->setEstado("Aceptado");
-            $this->pedidoDAO->Edit($pedido);
-            $venta = new Venta('', $pedido, date("Y-m-d"), $nroFactura);
-            $this->ventaDAO->Add($venta);
-            $this->ShowDetallesAdminView($id);
+            try{
+                $pedido = $this->pedidoDAO->GetOne($id);
+                $pedido->setEstado("Aceptado");
+                $this->pedidoDAO->Edit($pedido);
+                $venta = new Venta('', $pedido, date("Y-m-d"), $nroFactura);
+                $this->ventaDAO->Add($venta);
+                $this->ShowDetallesAdminView($id);
+
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo aceptar el pedido correctamente.", "Pedido/ShowListaAdminView/");
+            }
         }
 
 
         public function rechazarPedido($id){
 
-            $pedido = $this->pedidoDAO->GetOne($id);
-            $pedido->setEstado("Rechazado");
-            
-            foreach($pedido->getListaDetalles() as $detalle){
-                $producto = $detalle->getProducto();
-                $producto->setStock($producto->getStock() + $detalle->getCantidad());   //Se suman al stock las unidades que formaban parte del pedido
-                $this->productoDAO->Edit($producto);
-            }   
+            try{
+                
+                $pedido = $this->pedidoDAO->GetOne($id);
+                $pedido->setEstado("Rechazado");
+                
+                foreach($pedido->getListaDetalles() as $detalle){
+                    $producto = $detalle->getProducto();
+                    $producto->setStock($producto->getStock() + $detalle->getCantidad());   //Se suman al stock las unidades que formaban parte del pedido
+                    $this->productoDAO->Edit($producto);
+                }   
+    
+                $this->pedidoDAO->Edit($pedido);
+                $this->ShowDetallesAdminView($id);
 
-            $this->pedidoDAO->Edit($pedido);
-            $this->ShowDetallesAdminView($id);
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo rechazar el pedido correctamente.", "Pedido/ShowListaAdminView/");
+            }
         }
 
 
         public function agregarNroRemito($id, $nroRemito){
 
-            $pedido = $this->pedidoDAO->getOne($id);
-            $pedido->setNroRemito($nroRemito);
-            $this->pedidoDAO->Edit($pedido);
-            $this->ShowDetallesAdminView($id);
+            try{
+                
+                $pedido = $this->pedidoDAO->getOne($id);
+                $pedido->setNroRemito($nroRemito);
+                $this->pedidoDAO->Edit($pedido);
+                $this->ShowDetallesAdminView($id);
+
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo agregar el número de remito.", "Pedido/ShowListaAdminView/");
+            }
         }
 
 
         public function editarNroRemito($id){
 
-            $pedido = $this->pedidoDAO->GetOne($id);
-            $pedido->setNroRemito(null);
-            $this->pedidoDAO->Edit($pedido);
-            $this->ShowDetallesAdminView($id);
+            try{
+                
+                $pedido = $this->pedidoDAO->GetOne($id);
+                $pedido->setNroRemito(null);
+                $this->pedidoDAO->Edit($pedido);
+                $this->ShowDetallesAdminView($id);
+
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudo editar el pedido.", "Pedido/ShowListaAdminView/");
+            }
         }
 
 
         public function filtrarPedidos($estado){
 
-            switch ($estado){
+            try{
+                
+                switch ($estado){
+    
+                    case "En espera":
+    
+                        $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("En espera")); 
+                        break;
+    
+                    case "Aceptado":
+    
+                        $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("Aceptado"));
+                        break;
+    
+                    case "Rechazado":
+    
+                        $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("Rechazado"));
+                        break;
+    
+                    default:
+    
+                        $pedidos = $this->pedidoDAO->GetAll();
+                        break;
+                }
+    
+                return $pedidos;
 
-                case "En espera":
-
-                    $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("En espera")); 
-                    break;
-
-                case "Aceptado":
-
-                    $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("Aceptado"));
-                    break;
-
-                case "Rechazado":
-
-                    $pedidos = $this->pedidoDAO->GetPedidosPorEstado($this->estadoPedidoDAO->getIdPorEstado("Rechazado"));
-                    break;
-
-                default:
-
-                    $pedidos = $this->pedidoDAO->GetAll();
-                    break;
+            }catch (Exception $e){
+                ToolsController::ShowErrorView("No se pudieron filtrar los pedidos.", "Producto/ShowCatalogo/");
             }
-
-            return $pedidos;
         }
     }
 

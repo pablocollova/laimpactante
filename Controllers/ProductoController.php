@@ -37,13 +37,19 @@
         }
 
 
-        public function ShowListView(){
+        public function ShowListView($categoria = null){
            
             if ($_SESSION['esAdmin'] == true){
                 
                 require_once(VIEWS_PATH. 'header.php');
                 require_once(VIEWS_PATH. 'nav-admin.php');
-                $productos = $this->productoDAO->GetAll();
+                $categorias = $this->categoriaDAO->GetAll();
+
+                if ($categoria == null){    
+                    $productos = $this->productoDAO->GetAll();
+                }else{
+                    $productos = $this->productoDAO->getProductosPorCategoria($categoria);
+                }
                 require_once(VIEWS_PATH. 'listar-productos.php');
             }else{
                 require_once(VIEWS_PATH. 'header-login.php');
@@ -186,9 +192,10 @@
             $this->productoDAO->Remove($id);
             $this->ShowListView();
         }
+
         
    
-        public function ShowCatalogo(){
+        public function ShowCatalogo($categoria = null){
             
             try{
                 if(!isset($_SESSION['log'])){
@@ -208,9 +215,14 @@
                         require_once(VIEWS_PATH . 'nav-user.php');
                     }
                 }
+                $categorias = $this->categoriaDAO->GetAll();
+                
+                if ($categoria == null){    
+                    $productos = $this->productoDAO->getProductosEnVenta(); 
+                }else{
+                    $productos = $this->productoDAO->getProductosPorCategoria($categoria, true);
+                }
 
-                $productos = $this->productoDAO->getProductosEnVenta(); 
-            
                 require_once(VIEWS_PATH . 'catalogo.php');
                 require_once(VIEWS_PATH . 'footer.php');
 

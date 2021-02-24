@@ -38,8 +38,8 @@ class LoginController {
             }
             
         }catch (Exception $ex){
-            throw $ex;
-            /* ToolsController::ShowErrorView("Error al iniciar sesión.", $ex->getMessage(), "Producto/ShowCatalogo/"); */
+
+            ToolsController::ShowErrorView("El usuario y la contraseña no coinciden.", "Producto/ShowCatalogo/");
         }
     }
 
@@ -113,7 +113,7 @@ class LoginController {
 
         }catch(Exception $ex){
 
-          // ToolsController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Tools/Index/");
+          ToolsController::ShowErrorView("No se pudo agregar al usuario, revise que los datos sean válidos.", "Login/signinView/");
         }
     }
 
