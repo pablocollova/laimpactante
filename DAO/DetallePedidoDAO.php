@@ -30,6 +30,23 @@
         }
 
 
+        public function Edit($idDetalle, $cantidad){
+
+            try{
+                $query = "UPDATE ".$this->tableName." SET cantidad_producto = cantidad_producto + :cantidad WHERE id_pedido = :idDetalle";
+                
+                $parameters["cantidad"] = $cantidad;
+                $parameters["idDetalle"] = $idDetalle;
+                
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            
+            }catch(Exception $ex){
+                throw $ex;
+            }
+        }
+
+
         public function GetDetallesPorPedido($idPedido){
             
             try{

@@ -37,13 +37,19 @@
         }
 
 
-        public function ShowListView(){
+        public function ShowListView($categoria = null){
            
             if ($_SESSION['esAdmin'] == true){
                 
                 require_once(VIEWS_PATH. 'header.php');
                 require_once(VIEWS_PATH. 'nav-admin.php');
-                $productos = $this->productoDAO->GetAll();
+                $categorias = $this->categoriaDAO->GetAll();
+
+                if ($categoria == null){    
+                    $productos = $this->productoDAO->GetAll();
+                }else{
+                    $productos = $this->productoDAO->getProductosPorCategoria($categoria);
+                }
                 require_once(VIEWS_PATH. 'listar-productos.php');
             }else{
                 require_once(VIEWS_PATH. 'header-login.php');
@@ -111,15 +117,7 @@
 
         }
 
-
-        public function Add($codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta, $imagenes){
-
-            if($paraVenta == "true"){
-                $paraVenta = true;
-            }else{
-                $paraVenta = false;
-            }            
-            /////////////////////////////////////////////
+        private function agregarImagenes($nombreProducto){
 
             if(isset($_FILES["imagenes"]) && $_FILES["imagenes"]["name"][0])
             {
@@ -137,7 +135,7 @@
                         {
                             $origen=$_FILES["imagenes"]["tmp_name"][$i];
                             $file_explode=explode(".",$_FILES["imagenes"]["name"][$i]);
-                            $destino=IMAGES_PATH.$nombre ."-image-".$i.".".$file_explode[1];
+                            $destino=IMAGES_PATH.$nombreProducto ."-image-".$i.".".$file_explode[1];
 
                             # movemos el archivo
                             if(@move_uploaded_file($origen, $destino))
@@ -156,24 +154,34 @@
             }else{
                 echo "<br>No se ha subido ninguna imagen";
             }
+        }
 
-            ///////////////////////////////////////////////
-            $producto = new Producto('', $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta);
+        
+        public function Add($codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categorias, $paraVenta, $imagenes = null){
+
+            if($paraVenta == "true"){
+                $paraVenta = true;
+            }else{
+                $paraVenta = false;
+            }            
+            
+            $this->agregarImagenes($nombre);
+            $producto = new Producto('', $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categorias, $paraVenta);
 
             $this->productoDAO->Add($producto);
             $this->ShowListView();
         }
 
 
-        public function Edit($id, $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta){
+        public function Edit($id, $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categorias, $paraVenta, $imagenes = null){
 
             if($paraVenta == "true"){
                 $paraVenta = true;
             }else{
                 $paraVenta = false;
             }
-
-            $producto = new Producto($id, $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categoria, $paraVenta);
+            $this->agregarImagenes($nombre);
+            $producto = new Producto($id, $codigo, $nombre, $descripcion, $stock, $precioUnitario, $minUnidades, $categorias, $paraVenta);
             $this->productoDAO->Edit($producto);
             $this->ShowListView();
         }
@@ -184,10 +192,11 @@
             $this->productoDAO->Remove($id);
             $this->ShowListView();
         }
+
         
    
-        public function ShowCatalogo(){
-
+        public function ShowCatalogo($categoria = null){
+            
             try{
                 if(!isset($_SESSION['log'])){
                     $_SESSION['log'] = false;
@@ -206,9 +215,14 @@
                         require_once(VIEWS_PATH . 'nav-user.php');
                     }
                 }
+                $categorias = $this->categoriaDAO->GetAll();
+                
+                if ($categoria == null){    
+                    $productos = $this->productoDAO->getProductosEnVenta(); 
+                }else{
+                    $productos = $this->productoDAO->getProductosPorCategoria($categoria, true);
+                }
 
-                $productos = $this->productoDAO->getProductosEnVenta(); 
-            
                 require_once(VIEWS_PATH . 'catalogo.php');
                 require_once(VIEWS_PATH . 'footer.php');
 

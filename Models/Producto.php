@@ -11,11 +11,11 @@
         private $stock;
         private $precioUnitario;
         private $minUnidades;
-        private $categoria;
+        private $categorias;    //Array de categorias
         private $paraVenta;
         private $imagen;
 
-        public function __construct($id = null, $codigo = null, $nombre = null, $descripcion = null, $stock = null, $precioUnitario = null, $minUnidades = null, $categoria = null, $paraVenta = null, $imagenes=null){
+        public function __construct($id = null, $codigo = null, $nombre = null, $descripcion = null, $stock = null, $precioUnitario = null, $minUnidades = null, $categorias = null, $paraVenta = null, $imagenes=null){
             
             $this->id = $id;
             $this->codigo = $codigo;
@@ -24,7 +24,7 @@
             $this->stock = $stock;
             $this->precioUnitario = $precioUnitario;
             $this->minUnidades = $minUnidades;
-            $this->categoria = $categoria;
+            $this->categorias = $categorias;
             $this->paraVenta = $paraVenta;
             $this->imagen= $imagenes;
         }
@@ -57,8 +57,8 @@
             $this->minUnidades = $minUnidades;
         }
 
-        public function setCategoria($categoria){
-            $this->categoria = $categoria;
+        public function setCategorias($categorias){
+            $this->categorias = $categorias;
         }
 
         public function setParaVenta($paraVenta){
@@ -96,8 +96,8 @@
             return $this->minUnidades;
         }
 
-        public function getCategoria(){
-            return $this->categoria;
+        public function getCategorias(){
+            return $this->categorias;
         }
 
         public function getParaVenta(){

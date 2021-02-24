@@ -13,6 +13,8 @@
      
  Autoload::start();
 
+ header('Cache-Control: no cache'); //Evita el error de cache por reenvío de formulario
+ 
  session_start();
 
  Router::Route(new Request());

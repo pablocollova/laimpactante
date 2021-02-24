@@ -34,24 +34,31 @@ CREATE TABLE categorias(
 	id_categoria smallint unsigned auto_increment,
 	nombre_categoria varchar(30),
 	descuento_categoria float,
-	constraint pk_categoria primary key(id_categoria)
+	constraint pk_categoria primary key(id_categoria),
+    constraint unq_nombre unique (nombre_categoria)
 );
 
 CREATE TABLE productos
 (
 	id_producto int unsigned AUTO_INCREMENT,
-	codigo_produto varchar(30),
+	codigo_producto varchar(30),
 	nombre_producto varchar(50),
 	descripcion_producto varchar(50),
 	cantidad_producto smallint unsigned,
 	precio_producto float,
-	categoria_producto smallint unsigned,
 	id_proveedor smallint unsigned,
 	para_venta bool, #documentar potencial futuro
 	minimo_unidades smallint,
 	constraint pk_producto primary key (id_producto),
-	constraint fk_proveedor foreign key (id_proveedor) references proveedores (id_proveedor),
-	constraint fk_categoria foreign key (categoria_producto) references categorias (id_categoria)
+	constraint fk_proveedor foreign key (id_proveedor) references proveedores (id_proveedor)
+);
+
+CREATE TABLE categoriaxproducto(
+	id_producto int unsigned not null,
+    id_categoria smallint unsigned not null,
+    constraint pk_categoriaxproducto primary key (id_producto, id_categoria),
+    constraint fk_categoriaxp foreign key (id_categoria) references categorias (id_categoria),
+    constraint fk_productoxc foreign key (id_producto) references productos (id_producto)
 );
 
 CREATE TABLE estados_pedido
