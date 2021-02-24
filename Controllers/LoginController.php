@@ -114,7 +114,7 @@ class LoginController {
         }catch(Exception $ex){
 
           // ToolsController::ShowErrorView("Error al agregar al usuario.", $ex->getMessage(), "Tools/Index/");
-        }
+            }
     }
 
 

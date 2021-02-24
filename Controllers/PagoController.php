@@ -37,7 +37,7 @@
                 
                 require_once(VIEWS_PATH. 'header.php');
                 require_once(VIEWS_PATH. 'nav-admin.php');
-                require_once(VIEWS_PATH. 'agregar-pago.php');
+                require_once(VIEWS_PATH. 'agregar-pago-filtro.php');
 
             }else{
                 require_once(VIEWS_PATH. 'header-login.php');
@@ -123,6 +123,9 @@
 
     public function AgregarPago($id_user){
 
+       $usu= $this->usuariosDAO->GetOne($id_user);
+       $_SESSION['filtroPago'] = true;
+       echo $usu->getNombre();
         echo $id_user;
     }
 
