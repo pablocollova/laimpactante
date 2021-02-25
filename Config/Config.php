@@ -9,6 +9,7 @@
 
     define("LOGO", "/laimpactante/Views/images/la-impactante.png");
     define("CSS", "/laimpactante/Views/css/style-laimp.css");
+    define("JS", "/laimpactante/Views/js/metodos-js.js");
     define("JS_BUBBLES", "/laimpactante/Views/js/bubbles.js");
 
     define("DB_HOST", "localhost");

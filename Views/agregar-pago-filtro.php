@@ -6,7 +6,7 @@
         <form>
         <div class="uk-margin-small">
         <label class="uk-form-label">Escribe un nombre</label>
-        <input class="uk-input" type="text" id="formulario" value="">
+        <input class="uk-input" type="text" id="formulario" value="" onkeyup='filtrar(<?php echo $usuariosString ?>);'>
       </div>
 <br>
       <table class="uk-table uk-table-middle uk-table-divider">
@@ -26,37 +26,4 @@
         </form>
         </div>
 
-        <script type ="text/javascript">
-
-        const usuarios = <?php echo $usuariosString ?>;
-
-        const formulario = document.querySelector('#formulario');
-        const resultado = document.querySelector('#resultado');
-
-        const filtrar = ()=>{
-            resultado.innerHTML = '';
-
-            const texto = formulario.value.toLowerCase();
-            
-            for(usuario of usuarios){
-                let nombre = usuario.nombre.toLowerCase();
-
-                if(nombre.indexOf(texto) !== -1){
-                    resultado.innerHTML += `
-                    <td>${usuario.nombre}</td>
-                    <td><a class="uk-button uk-button-primary" href="<?php echo FRONT_ROOT.'Pago/AgregarPago' ?>/${usuario.id}">Agregar</a></td>
-                    `
-                }
-            }
-
-            if(resultado.innerHTML === ''){
-                resultado.innerHTML += `
-                    <td>No hay resultados.</td>
-                    <td></td>
-                    `
-            }
-        }
-
-        formulario.addEventListener('keyup', filtrar);
-
-    </script>
+        <script src="<?php echo JS ?>"></script>

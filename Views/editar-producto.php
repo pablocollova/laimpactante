@@ -1,6 +1,6 @@
 <br>
 
-<div class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right">
+<div id="divEdit" class="uk-card uk-card-default uk-card-body uk-margin uk-margin-medium-left uk-margin-medium-right" onclick='editarProducto(<?php echo $categoriasJSON ?>, <?php echo $producto->getParaVenta() ?>);'>
 <h2>Editar Producto</h2>
 <br>
 
@@ -12,7 +12,7 @@
 
     <div class="uk-margin-small">
         <label class="uk-form-label">C&oacute;digo</label>
-        <input class="uk-input" type="number" name="codigo" min="0" value="<?= $producto->getCodigo()?>" required>
+        <input class="uk-input" type="text" name="codigo" min="0" value="<?= $producto->getCodigo()?>" required>
       </div>
 
       <div class="uk-margin-small">
@@ -32,9 +32,9 @@
 
       <div class="uk-margin-small">
         <label class="uk-form-label">Precio Unitario</label>
-        <input class="uk-input" type="number" name="precioUnitario" value="<?= $producto->getPrecioUnitario()?>" min="0" required>
+        <input class="uk-input" type="text" name="precioUnitario" value="<?= $producto->getPrecioUnitario()?>" min="0" required>
       </div>
-
+ 
       <div class="uk-margin-small">
         <label class="uk-form-label">Cantidad M&iacute;nima de Unidades</label>
         <input class="uk-input" type="number" name="minUnidades" value="<?= $producto->getMinUnidades()?>" min="0" required>
@@ -42,22 +42,22 @@
 
       <div class="uk-margin-small">
         <label class="uk-form-label">Categor&iacute;a</label>
-        <select multiple class="uk-select" name="categoria[]" required>
-          <option value="disabled" disabled selected>Seleccione una categoría</option>
+        <select multiple id="categorias" class="uk-select" name="categoria[]" required>
+          <option value="disabled" disabled>Seleccione una categoría</option>
           <?php
             foreach ($categorias as $categoria){
-              echo "<option value=". $categoria->getNombre(). ">". $categoria->getNombre()." </option>";
+              echo '<option class="categ" value="'.$categoria->getNombre().'">'.$categoria->getNombre().'</option>';
             }
           ?>
         </select>
       </div>
        
-      <div class="uk-margin-medium">
+      <div class="uk-margin-small">
       <label class="uk-form-label">Producto a la Venta</label>
-        <input class="uk-radio" type="radio" name="paraVenta" value="true" id="true" required>
+        <input id="ventaTrue" class="uk-radio" type="radio" name="paraVenta" value="true" id="true" required>
         <label for="true">Si</label>
             &#160;&#160;
-        <input class="uk-radio" type="radio" name="paraVenta" value="false" id="false">
+        <input id="ventaFalse" class="uk-radio" type="radio" name="paraVenta" value="false" id="false">
         <label for="false">No</label>
       </div>
 
@@ -79,3 +79,9 @@
           </div>
 </form>
 </div>
+
+<script src="<?php echo JS ?>"></script>
+<script type="text/javascript">
+document.querySelector('#divEdit').click();
+</script>
+

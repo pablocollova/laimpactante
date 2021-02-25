@@ -68,6 +68,17 @@
                 require_once(VIEWS_PATH. 'nav-admin.php');
                 $producto = $this->productoDAO->getOne($id);
                 $categorias = $this->categoriaDAO->GetAll();
+
+                $arrayCategorias = $producto->getCategorias();
+                $categoriasJSON = '[';
+
+                foreach($arrayCategorias as $nombreCategoria){
+                    $categoriasJSON = $categoriasJSON . '{"categoria":"' .$nombreCategoria. '"},';
+                }
+
+                $categoriasJSON = substr($categoriasJSON, 0, -1);
+                $categoriasJSON = $categoriasJSON . ']';
+
                 require_once(VIEWS_PATH. 'editar-producto.php');
             }else{
                 require_once(VIEWS_PATH. 'header-login.php');

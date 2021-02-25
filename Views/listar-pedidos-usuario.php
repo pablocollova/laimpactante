@@ -30,7 +30,19 @@
                   <td> <?= $pedido->getImporte(); ?> </td>
                   <td> <?= $pedido->getDescuento(); ?> </td>
                   <td> <?= $pedido->getNroRemito(); ?> </td>
-                  <td> <?= $pedido->getEstado(); ?> </td>
+                  <td> 
+                  <?php
+                    if($pedido->getEstado() == "Actual"){
+                      echo '<span class="uk-badge" style="border-radius: 2px; background-color: lightgrey; color: black;">Actual</span>';
+                    }else if($pedido->getEstado() == "En Espera"){
+                      echo '<span class="uk-badge" style="border-radius: 2px; background-color: #ffc107; color: black;">En Espera</span>';
+                    }else if($pedido->getEstado() == "Aceptado"){
+                      echo '<span class="uk-badge" style="border-radius: 2px; background-color: #28a745; color: white;">Aceptado</span>';
+                    }else if($pedido->getEstado() == "Rechazado"){
+                      echo '<span class="uk-badge" style="border-radius: 2px; background-color: #dc3545; color: white;">Rechazado</span>';
+                    }
+                    ?>
+                  </td>
                   <td>
                     <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowDetallesUsuarioView/ <?= $pedido->getId() ?>">Ver detalles</a>
                   </td>
