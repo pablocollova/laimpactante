@@ -5,6 +5,7 @@
     use \Exception as Exception;
     use DAO\Connection as Connection;
     use Models\Pago as Pago;
+    use DAO\DetallePagoDAO as DetallePagoDAO;
 
     class PagoDAO{
 
@@ -14,7 +15,7 @@
         public function Add(Pago $pago, $idCliente){
 
             try{
-                $query = "INSERT INTO ".$this->tableName." (id_cliente, monto, fecha, mediodepago, nro_recibo) VALUES (idCliente, monto, fecha, mediodepago, nroRecibo);";
+                $query = "INSERT INTO ".$this->tableName." (id_cliente, monto, fecha, mediodepago, nro_recibo) VALUES (:idCliente, :monto, :fecha, :mediodepago, :nroRecibo);";
                 
                 $parameters["idCliente"] = $idCliente;
                 $parameters["monto"] = $pago->getMonto();
@@ -25,9 +26,9 @@
                 $id = $this->lastId();
                 $detallePagoDAO = new DetallePagoDAO();
 
-                foreach($pago->getListaDetalles() as $detalle){
-                    $detallePagoDAO->Add($detalle);
-                }
+             //   foreach($pago->getListaDetalles() as $detalle){
+             //       $detallePagoDAO->Add($detalle);
+             //   }
 
                 $this->connection = Connection::GetInstance();
                 $this->connection->ExecuteNonQuery($query, $parameters);
@@ -93,7 +94,7 @@
         public function lastId(){
 
             try{
-                $query = "SELECT MAX(id) AS id FROM " . $this->tableName;
+                $query = "SELECT MAX(id_pago) AS id FROM " . $this->tableName;
                 $this->connection = Connection::GetInstance();
                 $resultSet = $this->connection->Execute($query);
 
@@ -109,7 +110,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Pago($p["id_pago"], $p["fecha"], $p["monto"], $p["mediodepago"], '', $p["nro_recibo"]);
+                return new Pago($p["id_pago"], $p["fecha"], $p["monto"], $p["mediodepago"], '', $p["nro_recibo"], $p["idCliente"]);
             }, $value);
             
             $detallePagoDAO = new DetallePagoDAO();

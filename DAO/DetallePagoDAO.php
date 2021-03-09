@@ -6,7 +6,7 @@
     use DAO\Connection as Connection;
     use Models\DetallePago as DetallePago;
 
-    class ProductoDAO{
+    class DetallePagoDAO{
 
         private $connection;
         private $tableName = "detalle_pagos";

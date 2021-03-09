@@ -12,7 +12,7 @@
         private $nroRecibo;
         private $idCliente;
 
-        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null){
+        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null, $idCliente=null){
             
             $this->id = $id;
             $this->fecha = $fecha;
@@ -20,7 +20,7 @@
             $this->medioDePago = $medioDePago;
             $this->listaDetalles = $listaDetalles;
             $this->nroRecibo = $nroRecibo;
-            
+            $this->idCliente=$idCliente;
         }
 
         public function setId($id){
