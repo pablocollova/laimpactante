@@ -11,7 +11,7 @@
         private $password;
         private $dni;
         private $telefono;
-        private $calle;
+        private $calle;//
         private $altura;
         private $piso;
         private $dpto;
