@@ -151,3 +151,17 @@ CREATE TABLE mediosdepago
 	constraint pk_detalle primary key(id_detalle),
 	constraint fk_pago foreign key (id_pago) references pagos (id_pago)
  );
+
+ CREATE TABLE facturas
+ (
+	id_factura int unsigned auto_increment,
+	id_pedido int unsigned,
+	letra_factura char,
+	nro_factura int unsigned,
+	total_factura float,
+	tipo_factura char,
+	pagado float,
+	cancelado int,
+	constraint pk_factura primary key(id_factura),
+	constraint fk_pedido foreign key (id_pedido) references pedidos (id_pedido)
+ );
