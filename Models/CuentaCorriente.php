@@ -5,7 +5,7 @@
     class CuentaCorriente{
 
         private $id;
-        private $listaFacturas;   //Array de Ventas
+        private $listaFacturas;   //Array de fcturas
         private $listaPagos;    //Array de Pagos
 
         public function __construct($id = null, $listaVentas = null, $listaPagos = null){

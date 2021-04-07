@@ -3,7 +3,7 @@
 namespace Controllers;
 
 use \Exception as Exception;
-use DAO\CuentaCorrienteDAO as CuentaCorrienteDAO;
+use DAO\Factura as CuentaCorrienteDAO;
 use Models\CuentaCorriente as CuentaCorriente;
 
 
