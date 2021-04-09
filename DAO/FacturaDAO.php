@@ -9,7 +9,7 @@
     class FacturaDAO{
 
         private $connection;
-        private $tableName = "pagos";
+        private $tableName = "facturas";
 
         public function Add(Pago $pago, $idCliente){
 

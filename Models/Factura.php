@@ -10,6 +10,7 @@
         private $letra;
         private $listaPagos;   //Array de Pagos
         private $idCliente;
+        private $nroFactura;
         
         public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null, $idCliente=null){
             
@@ -17,7 +18,6 @@
             $this->fecha = $fecha;
             $this->monto = $monto;
             $this->listaPagos;
-            $this->listaDetalles = $listaDetalles;
             $this->idCliente=$idCliente;
         }
 
@@ -33,16 +33,12 @@
             $this->monto = $monto;
         }
 
-        public function setMedioDePago($medioDePago){
-            $this->medioDePago = $medioDePago;
+        public function setListaPagos($listaPagos){
+            $this->listaPagos = $listaPagos;
         }
 
-        public function setListaDetalles($listaDetalles){
-            $this->listaDetalles = $listaDetalles;
-        }
-
-        public function setNroRecibo($nroRecibo){
-            $this->nroRecibo = $nroRecibo;
+        public function setNroFactura($nroFactura){
+            $this->nroFactura = $nroFactura;
         }
 
         public function getId(){
@@ -57,16 +53,13 @@
             return $this->monto;
         }
 
-        public function getMedioDePago(){
-            return $this->medioDePago;
+
+        public function getListaPagos(){
+            return $this->listaPagos;
         }
 
-        public function getListaDetalles(){
-            return $this->listaDetalles;
-        }
-
-        public function getNroRecibo(){
-            return $this->nroRecibo;
+        public function getNroFactura(){
+            return $this->nroFactura;
         }
 
     }
