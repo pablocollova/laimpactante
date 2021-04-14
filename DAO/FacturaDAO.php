@@ -1,4 +1,4 @@
-?php
+<?php
 
     namespace DAO;
 
@@ -11,13 +11,14 @@
         private $connection;
         private $tableName = "facturas";
 
-        public function Add(Pago $pago, $idCliente){
+        public function Add(Factura $factura){
 
             try{
-                $query = "INSERT INTO ".$this->tableName." (id_cliente, monto, fecha, mediodepago, nro_recibo) VALUES (:idCliente, :monto, :fecha, :mediodepago, :nroRecibo);";
+                $query = "INSERT INTO ".$this->tableName." (id_pedido, letra_factura, nro_factura, total_factura, tipo_factura, pagado, cancelado, fecha ) VALUES (:idPedido, :letra, :nroFactura, :total, :tipo, :pagado, :cancelado, :fecha);";
                 
-                $parameters["idCliente"] = $idCliente;
-                $parameters["monto"] = $pago->getMonto();
+                idPedido, :letra, :nroFactura, :total, :tipo, :pagado, :cancelado, :fecha
+                $parameters["idPedido"] = $idPedido;
+                $parameters["letra"] = $pago->getMonto();
                 $parameters["fecha"] = $pago->getFecha();
                 $parameters["mediodepago"] = $pago->getMedioDePago();
                 $parameters["nroRecibo"] = $pago->getNroRecibo();

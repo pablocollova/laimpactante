@@ -157,6 +157,7 @@ CREATE TABLE mediosdepago
 	id_factura int unsigned auto_increment,
 	id_pedido int unsigned,
 	letra_factura char,
+	fecha_factura date,
 	nro_factura int unsigned,
 	total_factura float,
 	tipo_factura char,

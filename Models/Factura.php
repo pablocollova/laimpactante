@@ -1,13 +1,33 @@
+
+
+
 <?php
+
+/*CREATE TABLE facturas
+ (
+	id_factura int unsigned auto_increment,
+	id_pedido int unsigned,
+    fecha_factura date,
+	letra_factura char,
+	nro_factura int unsigned,
+	total_factura float,
+	tipo_factura char,
+	pagado float,
+	cancelado int,
+	constraint pk_factura primary key(id_factura),
+	constraint fk_pedido foreign key (id_pedido) references pedidos (id_pedido)
+ );*/
 
     namespace Models;
 
     class Factura{
 
         private $id;
+        private idPedido;
         private $fecha;
         private $monto;
         private $letra;
+        private $nroFactura;
         private $listaPagos;   //Array de Pagos
         private $idCliente;
         private $nroFactura;
