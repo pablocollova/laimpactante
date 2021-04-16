@@ -32,7 +32,8 @@
         private $idCliente;
         private $nroFactura;
         
-        public function __construct($id = null, $fecha = null, $monto = null, $medioDePago = null, $listaDetalles = null, $nroRecibo = null, $idCliente=null){
+        public function __construct( $id=
+        null, $idPedido=null, $letra=null, $nroFactura=null, $total=null, $tipo=null, $pagado=null, $cancelado=null,$fecha = null, $monto = null, $medioDePago = null ){
             
             $this->id = $id;
             $this->fecha = $fecha;
@@ -49,6 +50,10 @@
             $this->fecha = $fecha;
         }
 
+        public function setLetra($letra){
+            $this->letra = $letra;
+        }
+
         public function setMonto($monto){
             $this->monto = $monto;
         }
@@ -59,6 +64,10 @@
 
         public function setNroFactura($nroFactura){
             $this->nroFactura = $nroFactura;
+        }
+
+        public function setIdPedido($idPedido){
+            $this->idPedido=$idPedido;
         }
 
         public function getId(){
@@ -80,6 +89,14 @@
 
         public function getNroFactura(){
             return $this->nroFactura;
+        }
+
+        public function getIdPedido(){
+            return $this->idPedido;
+        }
+
+        public function getLetra(){
+            return $this->letra;
         }
 
     }

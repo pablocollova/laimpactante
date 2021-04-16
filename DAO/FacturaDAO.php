@@ -17,8 +17,9 @@
                 $query = "INSERT INTO ".$this->tableName." (id_pedido, letra_factura, nro_factura, total_factura, tipo_factura, pagado, cancelado, fecha ) VALUES (:idPedido, :letra, :nroFactura, :total, :tipo, :pagado, :cancelado, :fecha);";
                 
                 idPedido, :letra, :nroFactura, :total, :tipo, :pagado, :cancelado, :fecha
-                $parameters["idPedido"] = $idPedido;
-                $parameters["letra"] = $pago->getMonto();
+                $parameters["idPedido"] = $factura->getIdPedido();
+                $parameters["letra"] = $factura->getLetra();
+                $parameters["nroFactura"]=$factua->getNroFactura();
                 $parameters["fecha"] = $pago->getFecha();
                 $parameters["mediodepago"] = $pago->getMedioDePago();
                 $parameters["nroRecibo"] = $pago->getNroRecibo();
