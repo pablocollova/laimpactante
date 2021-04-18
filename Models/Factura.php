@@ -6,7 +6,7 @@
 /*CREATE TABLE facturas
  (
 	id_factura int unsigned auto_increment,
-	id_pedido int unsigned,
+	id_pedido int unsigned,<<<<<<<<<<<<<<<<<
     fecha_factura date,
 	letra_factura char,
 	nro_factura int unsigned,
@@ -31,6 +31,8 @@
         private $listaPagos;   //Array de Pagos
         private $idCliente;
         private $nroFactura;
+        private $tipo;
+        private $pagado;
         
         public function __construct( $id=
         null, $idPedido=null, $letra=null, $nroFactura=null, $total=null, $tipo=null, $pagado=null, $cancelado=null,$fecha = null, $monto = null, $medioDePago = null ){
@@ -43,7 +45,11 @@
         }
 
         public function setId($id){
-            $this->id = $id;
+            $this->id = $id;            
+        }
+
+        public function setIdPedido($idPedido){
+            $this->idPedido=$idPedido;
         }
 
         public function setFecha($fecha){
@@ -65,10 +71,24 @@
         public function setNroFactura($nroFactura){
             $this->nroFactura = $nroFactura;
         }
-
-        public function setIdPedido($idPedido){
-            $this->idPedido=$idPedido;
+        
+        public function setIdCliente($idCliente){
+            $this->idCliente=$idCliente;
         }
+       
+        public function setTipo($tipo){
+            $this->tipo=$tipo;
+        }
+
+        public function setPagado($pagado){
+            $this->pagado=$pagado;
+        }
+
+        public function setCancelado($cancelado){
+            $this->cancelado=$cancelado;
+        }
+
+
 
         public function getId(){
             return $this->id;
@@ -82,6 +102,9 @@
             return $this->monto;
         }
 
+        public function getCancelado(){
+            return $this->cancelado;
+        }
 
         public function getListaPagos(){
             return $this->listaPagos;
@@ -98,6 +121,17 @@
         public function getLetra(){
             return $this->letra;
         }
+        public function getTipo(){
+            return $this->tipo;
+        }
+        public function getPagado(){
+            return $this->pagado;
+        }
+
+        public function getIdCliente(){
+            return $this->idCliente;
+        }
+
 
     }
 
