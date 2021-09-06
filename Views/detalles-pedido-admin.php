@@ -55,30 +55,45 @@
         <a href="<?= FRONT_ROOT ?>Pedido/editarNroRemito/<?= $pedido->getId() ?>" class="btn btn-warning">Editar</a>
         </h5>
         
-      <?php }else{ ?>
+      <?php }else if(!$pedido->getEstado()=="Rechazado"){ ?>
         
         <form method= "post" action = "<?=FRONT_ROOT?>Pedido/agregarNroRemito">
-
           <input type="hidden" name="id" value=<?= $pedido->getId() ?> >   
-
           <div>
             <label><b>Agregar Nro. Remito:</b></label>
-            <input type="number" name="factura" value="" min="0" required>
-            <button type="submit" class="btn btn-warning"> Aceptar </button>
+            <input type="number" name="nroRemito" value="" min="0" >
           </div>
-
-        
         </form>
 
       <?php } ?>
 
+      
+
     <?php
-      if ($pedido->getEstado() == "Aceptado"){ 
+      if ($pedido->getEstado() == "Aceptado" || $pedido->getEstado() == "En Espera"){ 
         $venta = $this->ventaDAO->GetOne($pedido->getId());
     ?>
-        <h5><b>Fecha de venta:</b> <?= date("d/m/Y", strtotime($venta->getFecha()))?> </h5>
-        <h5><b>Nro. Factura:</b> <?= $venta->getNroFactura()?> </h5>
-    <?php } ?>
+
+        <?php
+      if (!empty($venta->getNroFactura())){ ?>
+
+        <h5><b>Nro. Factura:</b> <?= $venta->getNroFactura()?>
+        <a href="<?= FRONT_ROOT ?>Pedido/editarNroRemito/<?= $pedido->getId() ?>" class="btn btn-warning">Editar</a>
+        </h5>
+        
+      <?php }else if($venta == NULL || $pedido->getEstado() == "En Espera"){ ?>
+        <form method= "post" action = "<?=FRONT_ROOT?>Pedido/agregarNroRemito">
+          <input type="hidden" name="id" value=<?= $pedido->getId() ?> >   
+          <div>
+            <label><b>Agregar Nro. Factura:</b></label>
+            <input type="number" name="factura" value="" min="0" >
+          </div>
+        </form>
+        <?php } 
+        
+        if ($pedido->getEstado() == "Aceptado"){?>
+      <h5><b>Fecha de venta:</b> <?= date("d/m/Y", strtotime($venta->getFecha()))?> </h5>
+    <?php }} ?>
 
   <!-- ////////////////////////////////////////////////////////// -->
 
@@ -127,7 +142,7 @@
   </table>
   <br>
   <?php 
-  if ($pedido->getEstado() == "En espera"){?>
+  if ($pedido->getEstado() == "En Espera"){?>
    
     <div class="uk-flex uk-flex-center">
       <a class="uk-button uk-button-primary" href="<?= FRONT_ROOT ?>Pedido/ShowConfirmarAceptarPedidoView/<?= $pedido->getId() ?>">Aceptar</a>

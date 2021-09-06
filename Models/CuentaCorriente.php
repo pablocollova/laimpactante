@@ -5,13 +5,13 @@
     class CuentaCorriente{
 
         private $id;
-        private $listaVentas;   //Array de Ventas
+        private $listaFacturas;   //Array de fcturas
         private $listaPagos;    //Array de Pagos
 
         public function __construct($id = null, $listaVentas = null, $listaPagos = null){
 
             $this->id = $id;
-            $this->listaVentas = $listaVentas;
+            $this->listaFacturas = $listaFacturas;
             $this->listaPagos = $listaPagos;
         }
 
@@ -19,7 +19,7 @@
             $this->id = $id;
         }
 
-        public function setListaVentas($listaVentas){
+        public function setListaFacturas($listaFacturas){
             $this->listaVentas = $listaVentas;
         }
 

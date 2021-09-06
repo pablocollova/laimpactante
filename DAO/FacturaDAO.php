@@ -4,24 +4,27 @@
 
     use \Exception as Exception;
     use DAO\Connection as Connection;
-    use Models\Pago as Pago;
-    use DAO\DetallePagoDAO as DetallePagoDAO;
-
-    class PagoDAO{
+    use Models\Factura as Factura;
+    
+    class FacturaDAO{
 
         private $connection;
-        private $tableName = "pagos";
+        private $tableName = "facturas";
 
-        public function Add(Pago $pago, $idCliente){
+        public function Add(Factura $factura){
 
             try{
-                $query = "INSERT INTO ".$this->tableName." (id_cliente, monto, fecha, mediodepago, nro_recibo) VALUES (:idCliente, :monto, :fecha, :mediodepago, :nroRecibo);";
+                $query = "INSERT INTO ".$this->tableName." (id_pedido, letra_factura, nro_factura, total_factura, tipo_factura, pagado, cancelado, fecha ) VALUES (:idPedido, :letra, :nroFactura, :total, :tipo, :pagado, :cancelado, :fecha);";
                 
-                $parameters["idCliente"] = $idCliente;
-                $parameters["monto"] = $pago->getMonto();
+               
+                $parameters["idPedido"] = $factura->getIdPedido();
+                $parameters["letra"] = $factura->getLetra();
+                $parameters["nroFactura"]=$factua->getNroFactura();
                 $parameters["fecha"] = $pago->getFecha();
-                $parameters["mediodepago"] = $pago->getMedioDePago();
-                $parameters["nroRecibo"] = $pago->getNroRecibo();
+                $parameters["total"] = $pago->getMonto();
+                $parameters["tipo"]=$pago->getTipo();
+                $parameters["pagado"]=$pago->getPagado();
+                $parameters["cancelado"] = $pago->getNroRecibo();
 
                 $id = $this->lastId();
                 $detallePagoDAO = new DetallePagoDAO();
@@ -42,8 +45,7 @@
         public function GetAll(){
             
             try{
-                $productoList = array();
-                $detallePagoDAO = new DetallePagoDAO();
+                $facturasList = array();
 
                 $query = "SELECT * FROM ".$this->tableName;
 
@@ -52,17 +54,22 @@
                 
                 foreach ($resultSet as $row){        
 
-                    $pago = new Pago();
-                    $pago->setId($row["id_pago"]);
-                    $pago->setFecha($row["fecha"]);
-                    $pago->setMonto($row["monto"]);
-                    $pago->setMedioDePago($row["mediodepago"]);
-                    $pago->setNroRecibo($row["nro_recibo"]);
-                    $pago->setListaDetalles($detallePagoDAO->GetDetallesDePago($row["id_pago"]));
+                    $factura = new Factura();
+                    $factura->setId($row["id_factura"]);
+                    $factura->setIdPedido($row["id_pedido"]);
+                    $factura->setFecha($row["fecha_factura"]);
+                    $factura->setLetra($row["letra_factura"]);
+                    $factura->setNroFactura($row["nro_factura"]);
+                    $factura->setMonto($row["total_factura"]);
+                    $factura->setTipo($row["tipo_factura"]);
+                    $factura->setPagado($row["pagado"]);
+                    $factura->setCancelado($row["cancelado"]);
+                    
+                    $factura->setListaDetalles($detallePagoDAO->GetDetallesDePago($row["id_pago"]));
 
-                    array_push($productoList, $pago);
+                    array_push($facturasList, $factura);
                 }
-                return $productoList;
+                return $facturasList;
 
             }catch(Exception $ex){
                 throw $ex;
@@ -72,7 +79,7 @@
 
         public function GetOne($id){
 
-            $query = "SELECT * FROM " . $this->tableName . " WHERE id_pago = :id";
+            $query = "SELECT * FROM " . $this->tableName . " WHERE id_factura = :id";
             $parameters["id"] = $id;
 
             try{
@@ -110,7 +117,7 @@
 
             $value = is_array($value) ? $value : [];
             $resp = array_map(function($p){
-                return new Pago($p["id_pago"], $p["fecha"], $p["monto"], $p["mediodepago"], '', $p["nro_recibo"], $p["idCliente"]);
+                return new factura($p["id_factura"], $p["id_pedido"], $p["fecha_factura"], $p["letra_factura"], '', $p["nro_factura"], $p["total_factura"], $p["tipo_factura"], $p["pagado"], $p["cancelado"]);
             }, $value);
             
             $detallePagoDAO = new DetallePagoDAO();
