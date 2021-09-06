@@ -147,16 +147,13 @@
     
                     $producto = $detalle->getProducto();
                     $nuevoStock = $producto->getStock() - $detalle->getCantidad();
-                    
-                    if ($nuevoStock > 0){
+                    if ($nuevoStock >= 0){
                         $producto->setStock($nuevoStock);
-                        var_dump($producto);
                         $this->productoDAO->Edit($producto);
                     }else{
                         throw new Exception("No hay stock suficiente del producto ". $producto->getNombre());
                     }
                 }
-    
                 $pedido->setEstado("En espera");
                 $pedido->setFecha(date("Y-m-d"));
                 $pedido->setImporte($this->calcularImporte($pedido->getListaDetalles()));
@@ -363,12 +360,12 @@
         }
 
 
-        public function agregarNroRemito($id, $nroRemito){
+        public function agregarNroRemito($id){
 
             try{
                 
                 $pedido = $this->pedidoDAO->getOne($id);
-                $pedido->setNroRemito($nroRemito);
+                $pedido->setNroRemito($id);
                 $this->pedidoDAO->Edit($pedido);
                 $this->ShowDetallesAdminView($id);
 

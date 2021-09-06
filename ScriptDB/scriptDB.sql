@@ -67,6 +67,7 @@ CREATE TABLE estados_pedido
 	descripcion varchar(50),
 	constraint pk_idestadopedido primary key (id_estadopedido)
 );
+INSERT INTO estados_pedido (descripcion) VALUES ("Actual"),("En Espera"),("Aceptado"),("Rechazado");
 
 CREATE TABLE ventas
 (
